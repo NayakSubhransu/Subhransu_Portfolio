@@ -142,7 +142,7 @@ export default function Hero() {
             </p>
 
             {/* Stat Chips */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-2" aria-label="Key statistics">
+            {/* <div className="flex flex-wrap justify-center lg:justify-start gap-2" aria-label="Key statistics">
               {[
                 { label: "LeetCode", value: "1934 Peak", sub: "Top 4%" },
                 { label: "DSA Problems", value: "1,500+", sub: "Solved" },
@@ -158,7 +158,7 @@ export default function Hero() {
                   <span className="text-xs text-emerald-400 font-medium">{sub}</span>
                 </div>
               ))}
-            </div>
+            </div> */}
 
             {/* CTA Buttons */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 w-full">

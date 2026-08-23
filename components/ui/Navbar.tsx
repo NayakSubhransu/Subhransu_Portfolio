@@ -98,7 +98,7 @@ export default function Navbar() {
               <Terminal className="w-4 h-4 text-emerald-400" aria-hidden="true" />
             </span>
             <span className="hidden sm:block font-mono text-sm font-semibold text-zinc-200 group-hover:text-emerald-400 transition-colors">
-              subhransu<span className="text-emerald-400">.</span>dev
+              subhransu
             </span>
           </a>
 

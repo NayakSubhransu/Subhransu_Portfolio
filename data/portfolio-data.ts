@@ -19,10 +19,10 @@ import type {
 
 export const heroData: HeroData = {
   name: "Subhransu Priyaranjan Nayak",
-  title: "Software Engineer & AI Developer",
+  title: "Software Developer & AI Engineer",
   headline:
-    "Backend · Distributed Systems · GenAI",
-  bio: "Final-year Integrated B.Tech student at IIT Bhubaneswar with proven expertise in distributed storage systems (Amazon Dynamo AP model), high-scale data engineering (600K+ users), and agentic RAG orchestration. Solved 1,500+ algorithmic problems across LeetCode (Peak: 1934, Top 4%), CodeChef (3-Star), and Codeforces.",
+    "Competitive Programming · Full-Stack Development · Microservices · Distributed Systems · GenAI/LLMs · RAG Pipelines · Data Engineering",
+  bio: "IIT Bhubaneswar graduate specializing in scalable backends, distributed consensus architectures, and modern Agentic RAG pipelines. Proven track record designing low-latency AP key-value stores (Amazon Dynamo model), decoupled microservices, and BigQuery analytical platforms serving 600K+ users.Active competitive programmer passionate about solving advanced Data Structures and Algorithms problems",
   photoPath: "/images/subhransu-photo.jpeg",
   photoAlt: "Subhransu Priyaranjan Nayak - Software Engineer & AI Developer",
   resumePath: "/resume.pdf",
