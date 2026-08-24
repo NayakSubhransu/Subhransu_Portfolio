@@ -42,6 +42,15 @@ export default function HomePage() {
           <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
         </div>
 
+        <Achievements />
+
+        <div
+          className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"
+          aria-hidden="true"
+        >
+          <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+        </div>
+
         {/* 2. Work Experience & Current Focus */}
         <Experience />
 
@@ -63,14 +72,14 @@ export default function HomePage() {
         </div>
 
         {/* 4. Competitive Programming & Achievements */}
-        <Achievements />
+        {/* <Achievements />
 
         <div
           className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"
           aria-hidden="true"
         >
           <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
-        </div>
+        </div> */}
 
         {/* 5. Stack & Technical Skills */}
         <Skills />

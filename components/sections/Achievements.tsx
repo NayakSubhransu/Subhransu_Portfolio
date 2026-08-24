@@ -25,24 +25,25 @@ export default function Achievements() {
           <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-100 tracking-tight">
             Algorithmic Achievements
           </h2>
-          <p className="mt-2 text-zinc-500 max-w-xl text-sm sm:text-base">
+          <p className="mt-2 text-white-500 max-w-xl text-sm sm:text-base">
             1,500+ problems solved across major platforms. Consistent
             performance in algorithmic contests.
           </p>
         </header>
 
         {/* ── Platform Cards ── */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
           {cpPlatforms.map((platform) => (
             <article
               key={platform.id}
-              className="glass-card rounded-2xl p-5 sm:p-6 flex flex-col gap-4"
-              aria-label={`${platform.name} competitive programming profile`}
+              className="glass-card rounded-2xl p-5 flex flex-col gap-4 relative overflow-hidden"
+              aria-label={`${platform.name} profile`}
             >
-              {/* Platform Name & Handle */}
+              <div className="card-accent-line" aria-hidden="true" />
+
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <h3 className="text-base font-bold text-zinc-100">
+                  <h3 className="text-base font-bold text-[--text-primary] tracking-[-0.01em]">
                     {platform.name}
                   </h3>
                   <p
@@ -51,26 +52,19 @@ export default function Achievements() {
                     @{platform.handle}
                   </p>
                 </div>
-
-                {/* Badge pill */}
                 <span
-                  className="px-2.5 py-1 rounded-full text-xs font-bold border"
+                  className="px-2.5 py-1 rounded-full text-xs font-bold border flex-shrink-0"
                   style={{
                     color: platform.accentColor,
                     borderColor: `${platform.accentColor}30`,
                     backgroundColor: `${platform.accentColor}10`,
                   }}
-                  aria-label={`${platform.badgeLabel} rating badge`}
                 >
                   {platform.badgeLabel}
                 </span>
               </div>
 
-              {/* Rating display */}
-              <div
-                className="flex flex-col gap-1 p-3 rounded-xl bg-white/[0.03] border border-white/[0.05]"
-                aria-label={`Peak rating: ${platform.peakRating}`}
-              >
+              <div className="p-3 rounded-xl bg-white/[0.025] border border-[--border-subtle]">
                 <div className="flex items-baseline gap-2">
                   <span
                     className="text-3xl font-extrabold font-mono tabular-nums"
@@ -78,25 +72,23 @@ export default function Achievements() {
                   >
                     {platform.peakRating}
                   </span>
-                  <span className="text-xs text-zinc-500">Peak Rating</span>
+                  <span className="text-xs text-[--text-muted]">
+                    Peak Rating
+                  </span>
                 </div>
-                <p className="text-xs font-semibold text-zinc-400">
+                <p className="text-xs font-semibold text-[--text-secondary] mt-0.5">
                   {platform.ratingLabel}
                 </p>
               </div>
 
-              {/* Problems Solved (if available) */}
               {platform.problemsSolved !== undefined && (
-                <div
-                  className="flex items-center gap-2"
-                  aria-label={`Problems solved: ${platform.problemsSolved}+`}
-                >
+                <div className="flex items-center gap-2">
                   <Target
-                    className="w-3.5 h-3.5 text-zinc-600"
+                    className="w-3.5 h-3.5 text-[--text-faint]"
                     aria-hidden="true"
                   />
-                  <span className="text-xs text-zinc-500">
-                    <strong className="text-zinc-300 font-semibold">
+                  <span className="text-xs text-[--text-muted]">
+                    <strong className="text-[--text-secondary] font-semibold">
                       {platform.problemsSolved}+
                     </strong>{" "}
                     problems solved
@@ -104,13 +96,11 @@ export default function Achievements() {
                 </div>
               )}
 
-              {/* Visit Profile */}
               <a
                 href={platform.profileUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.07] text-zinc-400 hover:text-zinc-200 text-xs font-semibold transition-all duration-200 min-h-[44px] mt-auto"
-                aria-label={`Visit ${platform.name} profile for ${platform.handle}`}
+                className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl border border-[--border-medium] bg-white/[0.025] hover:bg-white/[0.06] text-[--text-secondary] hover:text-[--text-primary] text-xs font-semibold transition-all duration-200 min-h-[44px] mt-auto"
               >
                 View Profile
                 <ExternalLink className="w-3 h-3" aria-hidden="true" />
@@ -122,10 +112,10 @@ export default function Achievements() {
         {/* ── Hackathon & Contest Honors ── */}
 
         <div>
-          <h3 className="text-xs font-mono font-semibold uppercase tracking-widest text-zinc-500 mb-5 flex items-center gap-2">
-            <span className="w-4 h-px bg-zinc-700" aria-hidden="true" />
-            Hackathon & Contest Honors
-            <span className="w-4 h-px bg-zinc-700" aria-hidden="true" />
+          <h3 className="text-s font-mono font-semibold uppercase tracking-widest text-white-500 mb-5 flex items-center gap-2">
+            <span className="w-4 h-px bg-white-700" aria-hidden="true" />
+            Hackathon Honors
+            <span className="w-4 h-px bg-white-700" aria-hidden="true" />
           </h3>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -166,7 +156,6 @@ export default function Achievements() {
                     </a>
                   )}
 
-                  {/* 🚨 FIX: By casting to 'any', Vercel will ignore the type error here */}
                   {ach.githubUrl && (
                     <a
                       href={ach.githubUrl}

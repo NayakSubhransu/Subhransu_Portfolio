@@ -147,6 +147,7 @@ export default function EducationSection() {
                     </div>
                   </div>
 
+                
                   {/* Skills covered */}
                   {cert.skills?.length > 0 && (
                     <div
@@ -156,7 +157,7 @@ export default function EducationSection() {
                       {cert.skills.map((skill) => (
                         <span
                           key={skill}
-                          className="px-2 py-0.5 rounded text-[11px] font-medium bg-zinc-800/80 border border-zinc-700/60 text-zinc-400 font-mono"
+                          className="px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-white/[0.03] border border-[--border-subtle] text-[--text-muted]"
                         >
                           {skill}
                         </span>

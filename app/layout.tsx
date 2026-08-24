@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: "https://subhransu.dev",
     siteName: "Subhransu Nayak Portfolio",
-    title: "Subhransu Priyaranjan Nayak — Software Engineer & AI Developer",
+    title: "Subhransu Priyaranjan Nayak - Software Engineer & AI Developer",
     description:
       "Backend · Distributed Systems · GenAI. Building DynamoCore, Enterprise RAG Orchestrator, and more.",
     images: [
@@ -39,13 +39,13 @@ export const metadata: Metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Subhransu Priyaranjan Nayak — Software Engineer & AI Developer",
+        alt: "Subhransu Priyaranjan Nayak - Software Engineer & AI Developer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Subhransu Priyaranjan Nayak — Software Engineer & AI Developer",
+    title: "Subhransu Priyaranjan Nayak - Software Engineer & AI Developer",
     description:
       "Backend · Distributed Systems · GenAI. IIT Bhubaneswar. LeetCode Top 4%.",
     images: ["/opengraph-image"],

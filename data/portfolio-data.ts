@@ -112,6 +112,7 @@ export const workExperience: WorkExperience[] = [
     stack: [
       "Google BigQuery",
       "SQL",
+      "Python",
       "Looker Studio",
       "Firestore",
       "PostgreSQL",
@@ -136,6 +137,8 @@ export const workExperience: WorkExperience[] = [
     stack: [
       "Python",
       "PyTorch",
+      "Transformers",
+      "XTTS",
       "Dia-TTS (1.6B)",
       "Gemini 2.5 Flash API",
       "NLTK",
@@ -156,9 +159,13 @@ export const flagshipProjects: FlagshipProject[] = [
       "Java",
       "RocksDB",
       "Maven",
+      "Consistent Hashing(MurmurHash3)",
+      "JDK HttpServer",
       "Gossip Protocol",
       "Vector Clocks",
-      "Multithreading",
+      "Java Concurrency",
+      "Merkle Tree",
+      "Quorum Consensus", "Docker"
     ],
     highlights: [
       "Built a distributed **AP key-value store** with asynchronous quorum consensus (N=3, W=2, R=2) via non-blocking CompletableFuture pipelines, achieving **12 ms p99 write latency** under concurrent load.",
@@ -175,19 +182,20 @@ export const flagshipProjects: FlagshipProject[] = [
       "Real-Time Spatial Courier Dispatch & Resilient Order Fulfillment Microservices",
     repoUrl: "https://github.com/NayakSubhransu/UrbanEats",
     stack: [
-      "React",
+      "React.js",
       "Node.js",
       "TypeScript",
-      "RabbitMQ",
-      "Socket.io",
-      "MongoDB",
+      "Express.js",
+      "RabbitMQ(AMQP)",
+      "Socket.IO(WebSockets)",
+      "MongoDB", "Leaflet",
       "Docker",
     ],
     highlights: [
       "Decoupled core domains into **6 autonomous Node.js/TypeScript microservices** communicating via HTTP and asynchronous **RabbitMQ AMQP message queues**, ensuring fault tolerance and zero-downtime service autonomy.",
       "Built real-time courier dispatch with **MongoDB 2dsphere spatial indexing** and $nearSphere queries to match nearest courier within **500 m**; streamed live GPS telemetry at 10-second intervals via **Socket.IO** room-based routing.",
       "Automated abandoned cart with **MongoDB TTL indexes (15-mins)** and secured payment finalization with **Razorpay HMAC SHA-256** signature validation; atomic transaction persistence via RabbitMQ.",
-      "Optimized media pipelines streaming Multer in-memory buffers as **Base64 DataURIs to Cloudinary CDN** for zero-disk uploads, utilizing native MongoDB drivers to eliminate ODM overhead.",
+      "Optimized media pipelines streaming Multer in-memory buffers as **Base64 DataURIs to Cloudinary CDN** for zero-disk uploads, utilizing native **MongoDB drivers** to eliminate ODM overhead.",
     ],
     imageHint: "food delivery microservices event driven architecture",
   },
@@ -199,16 +207,17 @@ export const flagshipProjects: FlagshipProject[] = [
     repoUrl:
       "https://github.com/NayakSubhransu/enterprise-rag-orchestrator",
     stack: [
+      "Python",
       "FastAPI",
       "LangGraph",
       "Qdrant",
-      "Redis",
+      "Upstash Redis",
       "PostgreSQL",
       "Docker",
-      "Kubernetes",
+      "Ragas"
     ],
     highlights: [
-      "Built a **stateful multi-path reasoning engine** with LangGraph and PostgreSQL checkpointers dynamically routing queries across RAG, Text-to-SQL, and Hybrid paths; implemented **CRAG** web fallbacks and **Self-RAG** reflection loops to reduce hallucinations across a **95% noise document corpus**.",
+      "Built a **stateful multi-path reasoning engine** with LangGraph and **PostgreSQL checkpointers** dynamically routing queries across RAG, Text-to-SQL, and Hybrid paths; implemented **CRAG** web fallbacks and **Self-RAG** reflection loops to reduce hallucinations across a **95% noise document corpus**.",
       "Engineered a multi-stage retrieval pipeline with **Qdrant hybrid search (Dense + Sparse TF-IDF via RRF), HyDE expansion, and Cross-Encoder reranking (Top-20 to Top-5)**, backed by a 5-tier cryptographic **Redis cache**.",
       "Developed an **AST-guarded Text-to-SQL engine** over 7 PostgreSQL 16 tables on K8s; enforced SELECT-only execution policies and integrated LangGraph interrupt() **HITL** approval gates to block AI-generated mutation queries.",
       "Hardened a **9-layer defense architecture** across FastAPI endpoints with ML prompt injection scanning (llm-guard), **XML spotlighting, bidirectional PII redaction, token budgeting, and Ragas benchmarking**.",
