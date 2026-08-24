@@ -33,10 +33,7 @@ export default function Projects() {
       aria-label="Projects Showcase"
     >
       {/* Subtle background */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        aria-hidden="true"
-      >
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div className="absolute top-1/2 left-0 w-96 h-96 bg-indigo-500/[0.03] rounded-full blur-3xl" />
       </div>
 
@@ -51,16 +48,17 @@ export default function Projects() {
             Projects Showcase
           </h2>
           <p className="mt-2 text-zinc-500 max-w-xl text-sm sm:text-base">
-            Production-grade systems and tools - built with real architectural trade-offs.
+            Production-grade systems and tools - built with real architectural
+            trade-offs.
           </p>
         </header>
 
         {/* ── Part 1: Flagship Projects ── */}
         <div className="mb-16">
-          <h3 className="text-xs font-mono font-semibold uppercase tracking-widest text-zinc-500 mb-6 flex items-center gap-2">
-            <span className="w-4 h-px bg-zinc-700" aria-hidden="true" />
+          <h3 className="text-s font-mono font-semibold uppercase tracking-widest text-white-500 mb-6 flex items-center gap-2">
+            <span className="w-4 h-px bg-white-700" aria-hidden="true" />
             Flagship Systems
-            <span className="w-4 h-px bg-zinc-700" aria-hidden="true" />
+            <span className="w-4 h-px bg-white-700" aria-hidden="true" />
           </h3>
 
           <div className="flex flex-col gap-8">
@@ -109,7 +107,10 @@ export default function Projects() {
                           className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-indigo-500/20 bg-indigo-500/8 hover:bg-indigo-500/15 text-indigo-300 hover:text-indigo-200 text-xs font-semibold transition-all duration-200 min-h-[44px]"
                           aria-label={`View research paper for ${project.name}`}
                         >
-                          <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+                          <ExternalLink
+                            className="w-3.5 h-3.5"
+                            aria-hidden="true"
+                          />
                           Paper
                         </a>
                       )}
@@ -154,10 +155,10 @@ export default function Projects() {
 
         {/* ── Part 2: Utility Projects & Experiments ── */}
         <div>
-          <h3 className="text-xs font-mono font-semibold uppercase tracking-widest text-zinc-500 mb-6 flex items-center gap-2">
-            <span className="w-4 h-px bg-zinc-700" aria-hidden="true" />
+          <h3 className="text-s font-mono font-semibold uppercase tracking-widest text-white-500 mb-6 flex items-center gap-2">
+            <span className="w-4 h-px bg-white-700" aria-hidden="true" />
             Other Projects & Experiments
-            <span className="w-4 h-px bg-zinc-700" aria-hidden="true" />
+            <span className="w-4 h-px bg-white-700" aria-hidden="true" />
           </h3>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -194,14 +195,14 @@ export default function Projects() {
                   className="flex flex-wrap gap-1"
                   aria-label={`Tech stack for ${project.name}`}
                 >
-                  {project.stack.slice(0, 4).map((tech) => (
+                  {project.stack.slice(0, 7).map((tech) => (
                     <span key={tech} className="tech-tag">
                       {tech}
                     </span>
                   ))}
-                  {project.stack.length > 4 && (
+                  {project.stack.length > 7 && (
                     <span className="tech-tag text-zinc-600">
-                      +{project.stack.length - 4}
+                      +{Math.max(0, project.stack.length - 7)}
                     </span>
                   )}
                 </div>
@@ -216,7 +217,10 @@ export default function Projects() {
                 >
                   <Github className="w-3.5 h-3.5" aria-hidden="true" />
                   View on GitHub
-                  <ExternalLink className="w-2.5 h-2.5 opacity-50" aria-hidden="true" />
+                  <ExternalLink
+                    className="w-2.5 h-2.5 opacity-50"
+                    aria-hidden="true"
+                  />
                 </a>
               </article>
             ))}

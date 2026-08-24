@@ -26,7 +26,8 @@ export default function Achievements() {
             Algorithmic Achievements
           </h2>
           <p className="mt-2 text-zinc-500 max-w-xl text-sm sm:text-base">
-            1,500+ problems solved across major platforms. Consistent performance in algorithmic contests.
+            1,500+ problems solved across major platforms. Consistent
+            performance in algorithmic contests.
           </p>
         </header>
 
@@ -165,7 +166,7 @@ export default function Achievements() {
         </div> */}
 
         {/* ── Hackathon & Contest Honors ── */}
-        <div>
+        {/* <div>
           <h3 className="text-xs font-mono font-semibold uppercase tracking-widest text-zinc-500 mb-5 flex items-center gap-2">
             <span className="w-4 h-px bg-zinc-700" aria-hidden="true" />
             Hackathon & Contest Honors
@@ -204,6 +205,69 @@ export default function Achievements() {
                     <ExternalLink className="w-2.5 h-2.5" aria-hidden="true" />
                   </a>
                 )}
+              </div>
+            ))}
+          </div>
+        </div> */}
+        
+        <div>
+          <h3 className="text-xs font-mono font-semibold uppercase tracking-widest text-zinc-500 mb-5 flex items-center gap-2">
+            <span className="w-4 h-px bg-zinc-700" aria-hidden="true" />
+            Hackathon & Contest Honors
+            <span className="w-4 h-px bg-zinc-700" aria-hidden="true" />
+          </h3>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {cpAchievements.map((ach) => (
+              <div
+                key={ach.id}
+                className="glass-card rounded-xl p-4 flex flex-col justify-between border border-zinc-800 bg-zinc-900/40"
+                role="article"
+                aria-label={ach.title}
+              >
+                <div>
+                  <div className="flex items-center gap-2">
+                    <Trophy
+                      className="w-4 h-4 text-yellow-400 flex-shrink-0"
+                      aria-hidden="true"
+                    />
+                    <h4 className="text-sm font-bold text-zinc-200 leading-tight">
+                      {ach.title}
+                    </h4>
+                  </div>
+                  <p className="text-xs text-zinc-400 leading-relaxed mt-2">
+                    {ach.description}
+                  </p>
+                </div>
+
+                {/* Dynamic Action Link: Certificate OR GitHub Repo */}
+                <div className="mt-4">
+                  {ach.certUrl && (
+                    <a
+                      href={ach.certUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs text-emerald-400 hover:text-emerald-300 transition-colors"
+                      aria-label={`View certificate for ${ach.title}`}
+                    >
+                      <span>View Certificate</span>
+                      <ExternalLink className="w-3 h-3" aria-hidden="true" />
+                    </a>
+                  )}
+
+                  {ach.githubUrl && (
+                    <a
+                      href={ach.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs text-emerald-400 hover:text-emerald-300 transition-colors"
+                      aria-label={`View GitHub repository for ${ach.title}`}
+                    >
+                      <span>View Repository</span>
+                      <ExternalLink className="w-3 h-3" aria-hidden="true" />
+                    </a>
+                  )}
+                </div>
               </div>
             ))}
           </div>

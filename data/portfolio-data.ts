@@ -219,62 +219,84 @@ export const flagshipProjects: FlagshipProject[] = [
 
 export const utilityProjects: UtilityProject[] = [
   {
-    id: "ledger",
-    name: "Transaction Processing Ledger Backend",
-    summary:
-      "High-integrity financial ledger engine with Idempotency Keys, Atomic Transactions, Ledger Models, and JWT Blacklisting.",
-    repoUrl:
-      "https://github.com/NayakSubhransu/transaction-processing-ledger-backend",
-    stack: ["Node.js", "PostgreSQL", "Redis", "JWT", "Docker"],
-  },
-  {
     id: "collab-editor",
     name: "Realtime Collaborative Editor",
     summary:
-      "Multi-user live synchronized document editor supporting presence indicators, document version history, and real-time operational transformation.",
+      "A full-stack, real-time collaborative document editor featuring CRDT-based multi-user concurrent editing, live cursor presence, and rich-text formatting. Built with a reactive serverless architecture using Convex and Liveblocks to handle zero-latency synchronization, paired with Clerk for edge-authenticated access control and document organization.",
     repoUrl:
       "https://github.com/NayakSubhransu/realtime-collaborative-editor",
     stack: [
       "Next.js",
-      "Liveblocks",
       "Convex",
-      "Zustand",
-      "ProseMirror",
+      "Liveblocks",
       "Tiptap",
       "Clerk",
       "TypeScript",
+      "Tailwind CSS",
+      "shadcn/ui"
     ],
+  }, {
+    id: "ledger",
+    name: "Transaction Processing Ledger Backend",
+    summary:
+      "A double-entry financial ledger and transaction processing API built with Node.js and MongoDB. Features immutable debit-credit audit trails, multi-account balance management, JWT blacklisting, and async email alerts to ensure strict data integrity across money transfers.",
+    repoUrl:
+      "https://github.com/NayakSubhransu/transaction-processing-ledger-backend",
+    stack: [
+      "Node.js",
+      "Express.js",
+      "MongoDB",
+      "Mongoose",
+      "JWT",
+      "Bcrypt",
+      "Nodemailer",
+      "REST APIs"
+    ]
   },
+  {
+    id: "gc-app",
+    name: "IIT Bhubaneswar GC 2024 Mobile App",
+    summary:
+      "A cross-platform mobile application developed with React Native and Expo to track IIT Bhubaneswar's General Championship (GC) 2024. Features real-time sports and tech/cultural event schedules, live scorecards, points tally leaderboards, interactive team following, and an integrated admin panel for match and event score updates.",
+    repoUrl: "https://github.com/Neuroiitbbs/GC_2024_App",
+    stack: ["React Native", "Expo", "JavaScript", "React Navigation"],
+  },
+  
   {
     id: "maze-quest",
     name: "Medieval Maze Quest",
     summary:
-      "3D adventure maze game built in Unreal Engine 5 with procedural AI pathfinding and physics mechanics.",
+      "A first-person medieval dungeon puzzle game built in Unreal Engine 5 featuring modular C++ game mechanics, physics-based object manipulation via line tracing, and tag-filtered trigger systems for environmental puzzle solving.",
     repoUrl:
       "https://github.com/NayakSubhransu/GameDev-Hackathon--Medieval-Maze-Quest",
-    stack: ["Unreal Engine 5", "C++", "Blueprints"],
+    stack: ["Unreal Engine 5", "C++", "Physics Handle", "Component Architecture"],
     award: "Game Dev Hackathon - 3rd Place",
   },
   {
     id: "campus-erp",
     name: "Campus ERP System",
     summary:
-      "Role-based ERP portal for academic records, grade tracking, and administrative workflows.",
+      "Built an end-to-end MERN ERP suite delivering modular role-based portals for academic workflows, automated course registration, attendance monitoring, and stateful SAC inventory and equipment lifecycle management.",
     repoUrl: "https://github.com/NayakSubhransu/ERP_System_WebAthon",
-    stack: ["React", "Node.js", "Express", "PostgreSQL"],
+    stack: ["React", "Vite","Node.js", "Express.js", "MongoDB"],
     award: "WebDev Hackathon - 3rd Place",
   },
-  {
-    id: "gc-app",
-    name: "IIT Bhubaneswar GC 2024 Mobile App",
-    summary:
-      "Cross-platform official mobile application for General Championship 2024 live fixture tracking and announcements.",
-    repoUrl: "https://github.com/Neuroiitbbs/GC_2024_App",
-    stack: ["React Native", "TypeScript", "Firebase"],
-  },
+  
 ];
 
 export const cpPlatforms: CPPlatform[] = [
+  {
+    id: "codeforces",
+    name: "Codeforces",
+    handle: "Quantum-Questor",
+    profileUrl: "https://codeforces.com/profile/Quantum-Questor",
+    peakRating: 1345,
+    ratingLabel: "Pupil",
+    problemsSolved: 200,
+    colorClass: "text-sky-400",
+    accentColor: "#1DA1F2",
+    badgeLabel: "Pupil",
+  },
   {
     id: "leetcode",
     name: "LeetCode",
@@ -298,26 +320,16 @@ export const cpPlatforms: CPPlatform[] = [
     accentColor: "#F4A233",
     badgeLabel: "3★ Rated",
   },
-  {
-    id: "codeforces",
-    name: "Codeforces",
-    handle: "Quantum-Questor",
-    profileUrl: "https://codeforces.com/profile/Quantum-Questor",
-    peakRating: 1345,
-    ratingLabel: "Pupil",
-    problemsSolved: 200,
-    colorClass: "text-sky-400",
-    accentColor: "#1DA1F2",
-    badgeLabel: "Pupil",
-  },
+  
 ];
+
 
 export const cpAchievements: CPAchievement[] = [
   {
     id: "inter-iit",
     title: "Bronze Medal - Inter IIT Tech Meet 10.0 (2022)",
     description:
-      "Secured 3rd place for IIT Bhubaneswar across 23 IITs in the prestigious Inter IIT Tech Meet.",
+      "Secured 3rd position representing IIT Bhubaneswar in the `Gmetri's Growth Strategy for Metaverse` event at Inter-IIT Tech Meet 10.0 conducted by IIT Kharagpur, designing strategic growth frameworks and solutions for emerging metaverse ecosystems.",
     certUrl:
       "https://drive.google.com/file/d/1EaAh0NhMKyq-5XM5L7PDq1qvw-X8HsDI/view",
   },
@@ -325,14 +337,16 @@ export const cpAchievements: CPAchievement[] = [
     id: "gamedev-hackathon",
     title: "Intra-IIT Hackathon - Game Dev 3rd Place",
     description:
-      "3rd place in Game Dev category building Medieval Maze Quest in Unreal Engine 5 with procedural AI.",
+      "Engineered `Medieval Maze Quest`, a 3D first-person puzzle-dungeon game built in Unreal Engine 5. Implemented core gameplay systems in C++, including physics handle raycasting for dynamic object interactions, custom actor movement interpolation, and tag-based trigger volumes for interactive environmental puzzles.",
+    githubUrl: "https://github.com/NayakSubhransu/GameDev-Hackathon--Medieval-Maze-Quest",
   },
   {
     id: "webdev-hackathon",
     title: "Intra-IIT Hackathon - WebDev 3rd Place",
     description:
-      "3rd place in WebDev category building a full-featured role-based ERP portal for academic administration.",
-  },
+      "Architected and built a full-stack Academic ERP system featuring dedicated portals for students and administrators. Key implementations include automated course registration, attendance tracking, student profile management, feedback collection, grading views, and a SAC equipment issuance workflow using React, Node.js, Express, and MongoDB.",
+    githubUrl: "https://github.com/NayakSubhransu/ERP_System_WebAthon",
+  }
 ];
 
 export const skillCategories: SkillCategory[] = [
@@ -544,7 +558,7 @@ export const certifications: Certification[] = [
   },
   {
     id: "sys-design-udemy",
-    name: "System Design Basics",
+    name: "System Design From Basics to Cracking Interviews",
     issuer: "Udemy",
     year: 2026,
     verifyUrl:
