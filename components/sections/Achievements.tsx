@@ -167,9 +167,9 @@ export default function Achievements() {
                   )}
 
                   {/* 🚨 FIX: By casting to 'any', Vercel will ignore the type error here */}
-                  {(ach as any).githubUrl && (
+                  {ach.githubUrl && (
                     <a
-                      href={(ach as any).githubUrl}
+                      href={ach.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 text-xs text-emerald-400 hover:text-emerald-300 transition-colors min-h-[36px]"
