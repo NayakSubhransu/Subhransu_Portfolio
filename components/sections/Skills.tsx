@@ -56,7 +56,7 @@ export default function Skills() {
             Tech-Stacks & Skills
           </h2>
           <p className="mt-2 text-zinc-500 max-w-xl text-sm sm:text-base">
-            Tools, frameworks, and systems I work with across the full engineering stack.
+            Tools, frameworks, and systems I work with across the engineering stack.
           </p>
         </header>
 
@@ -120,7 +120,7 @@ export default function Skills() {
           aria-hidden="true"
         >
           <Code2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-          <p className="text-xs text-zinc-500 leading-relaxed">
+          <p className="text-s text-zinc-500 leading-relaxed">
             Most comfortable with{" "}
             <span className="text-zinc-300 font-medium">
               C++ for competitive programming

@@ -56,21 +56,40 @@ export const heroData: HeroData = {
   },
 };
 
+// export const currentFocus: CurrentFocus = {
+//   title: "GitHub PR Reviewer",
+//   status: "Active Engineering / In Development",
+//   architecture:
+//     "An autonomous multi-agent code analysis pipeline leveraging AST parsing, LLM diff reasoning, and GitHub Webhooks to execute deterministic linting, security vulnerability checks, and automated review commentary on open PRs.",
+//   stack: [
+//     "Python",
+//     "FastAPI",
+//     "AST Parsing",
+//     "LangGraph",
+//     "vLLM",
+//     "GitHub REST & Webhook APIs",
+//     "Docker",
+//   ],
+//   repoUrl: "https://github.com/NayakSubhransu",
+// };
+
 export const currentFocus: CurrentFocus = {
-  title: "GitHub PR Reviewer",
-  status: "Active Engineering / In Development",
+  status: "On Active Development",
+  title: "AI GitHub Pull-Request Reviewer Agent",
   architecture:
-    "An autonomous multi-agent code analysis pipeline leveraging AST parsing, LLM diff reasoning, and GitHub Webhooks to execute deterministic linting, security vulnerability checks, and automated review commentary on open PRs.",
+    "Event-driven microservices architecture utilizing FastAPI, LangGraph workflow orchestration, Redis message queues with Celery workers, and a continuous feedback learner loop deployed on Kubernetes via Terraform.",
   stack: [
     "Python",
     "FastAPI",
-    "AST Parsing",
     "LangGraph",
-    "vLLM",
-    "GitHub REST & Webhook APIs",
-    "Docker",
+    "Celery",
+    "Redis",
+    "PostgreSQL",
+    "Kubernetes",
+    "Terraform",
+    "Prometheus",
   ],
-  repoUrl: "https://github.com/NayakSubhransu",
+  repoUrl: "https://github.com/NayakSubhransu/github-ai-pull-request-reviewer-agent",
 };
 
 export const workExperience: WorkExperience[] = [
@@ -80,14 +99,14 @@ export const workExperience: WorkExperience[] = [
     company: "HealthyDay",
     companyUrl: "https://healthyday.co.in/",
     location: "Hybrid, India",
-    duration: "Nov 2025 - Present",
+    duration: "Nov 2025 - Present (3 Mo. + 6 Mo. Extended)",
     type: "internship",
     verificationUrl:
       "https://drive.google.com/file/d/1Az1x0rX7HdN39RdKljrPsjGWNHC8vm1z/view?usp=drivesdk",
     bullets: [
       "Engineered a **BigQuery**-based data processing layer for a platform serving **600K+ registered students**, integrating Firestore and relational operational data by developing **50+ reusable SQL views** with CTEs, window functions, JSON parsing, regex classification, and temporal deduplication.",
       "Designed and optimized **150+ complex SQL queries** and data pipelines across user **attendance, referral, subscription, payment, and messaging workflows** using incremental aggregation strategies and query tuning.",
-      "Built **end-to-end data pipelines** unifying heterogeneous sources (Firestore, Google/Meta Ads, WhatsApp/AiSensy messaging logs, transactional databases), implementing entity matching, and event sequencing across system boundaries.",
+      "Built **end-to-end data pipelines** unifying heterogeneous sources **(Firestore Logs, Google/Meta Ads, WhatsApp/AiSensy messaging logs, transactional databases)**, implementing entity matching, and event sequencing across system boundaries.",
       "Developed automated data models and analytical views powering **Looker Studio** dashboards, implementing **funnel/event processing, cohort retention analysis, referral tracking, customer support metrics, and AI-classifier log monitoring**.",
     ],
     stack: [
@@ -110,9 +129,9 @@ export const workExperience: WorkExperience[] = [
     verificationUrl:
       "https://drive.google.com/file/d/1g53s2MK5ZbcHWlSVwPpLtv_hyFDE0sAz/view?usp=sharing",
     bullets: [
-      "Engineered an **AI text-to-animated-video narration pipeline** for Indian languages (EN, HI, TE) by fine-tuning **Dia-TTS (1.6B)**, optimizing training with dynamic LR scheduling and gradient clipping to eliminate robotic artifacts.",
-      "Architected a long-form audio generation engine with sentence chunking (**NLTK**), input text normalization, failure-handling retry logic, and seed-locked speaker consistency (**IS11 tag**) for coherent synthesis.",
-      "Built an interactive **Streamlit UI** integrating **Gemini 2.5 Flash TTS API** alongside proprietary media pipelines (Hanyaa's), enabling automated multilingual narration generation.",
+      "Engineered an **AI text-to-animated-video narration pipeline** for Indian languages (English, Hindi, Telugu ) by fine-tuning **Dia-TTS (1.6B)**, optimizing training with **dynamic LR scheduling and gradient clipping** to eliminate robotic artifacts.",
+      "Architected a **long-form audio generation engine** with sentence chunking (**NLTK**), input text normalization, failure-handling retry logic, and seed-locked speaker consistency (**IS11 tag**) for coherent synthesis.",
+      "Built an interactive **Streamlit UI** integrating **Gemini 2.5 Flash TTS API** alongside proprietary media pipelines (Hanyaa's), enabling automated **multilingual narration generation**.",
     ],
     stack: [
       "Python",

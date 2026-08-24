@@ -46,7 +46,8 @@ export default function Experience() {
             Work Experience
           </h2>
           <p className="mt-2 text-zinc-500 max-w-xl text-sm sm:text-base">
-            Industry internships and engineering contributions - with verified credentials.
+            Industry internships and engineering contributions - with verified
+            credentials.
           </p>
         </header>
 
@@ -87,14 +88,20 @@ export default function Experience() {
                               aria-label={`Visit ${job.company} website`}
                             >
                               {job.company}
-                              <ExternalLink className="w-3 h-3 opacity-60" aria-hidden="true" />
+                              <ExternalLink
+                                className="w-3 h-3 opacity-60"
+                                aria-hidden="true"
+                              />
                             </a>
                           </div>
                         </div>
 
                         <div className="flex flex-col items-start sm:items-end gap-1 text-xs text-zinc-500 font-mono flex-shrink-0">
                           <div className="flex items-center gap-1.5">
-                            <CalendarDays className="w-3 h-3" aria-hidden="true" />
+                            <CalendarDays
+                              className="w-3 h-3"
+                              aria-hidden="true"
+                            />
                             <time>{job.duration}</time>
                           </div>
                           <div className="flex items-center gap-1.5">
@@ -125,7 +132,10 @@ export default function Experience() {
                       </ul>
 
                       {/* Tech Stack */}
-                      <div className="flex flex-wrap gap-1.5" aria-label="Technologies used">
+                      <div
+                        className="flex flex-wrap gap-1.5"
+                        aria-label="Technologies used"
+                      >
                         {job.stack.map((tech) => (
                           <span key={tech} className="tech-tag">
                             {tech}
@@ -143,9 +153,15 @@ export default function Experience() {
                             className="inline-flex items-center gap-1.5 text-xs text-zinc-600 hover:text-zinc-400 transition-colors"
                             aria-label={`Verify employment at ${job.company}`}
                           >
-                            <CheckCircle2 className="w-3 h-3 text-emerald-600" aria-hidden="true" />
+                            <CheckCircle2
+                              className="w-3 h-3 text-emerald-600"
+                              aria-hidden="true"
+                            />
                             Verified - View Offer/Experience Letter
-                            <ExternalLink className="w-2.5 h-2.5" aria-hidden="true" />
+                            <ExternalLink
+                              className="w-2.5 h-2.5"
+                              aria-hidden="true"
+                            />
                           </a>
                         </div>
                       )}
@@ -172,7 +188,7 @@ export default function Experience() {
                     </span>
                     <div>
                       <p className="text-xs text-emerald-500 font-mono font-semibold uppercase tracking-widest">
-                        Currently Building
+                        Currently Working On
                       </p>
                     </div>
                   </div>
@@ -206,7 +222,10 @@ export default function Experience() {
                     <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
                       Active Stack
                     </p>
-                    <div className="flex flex-wrap gap-1.5" aria-label="Technologies in use">
+                    <div
+                      className="flex flex-wrap gap-1.5"
+                      aria-label="Technologies in use"
+                    >
                       {currentFocus.stack.map((tech) => (
                         <span key={tech} className="tech-tag">
                           {tech}
@@ -225,7 +244,10 @@ export default function Experience() {
                   >
                     <GitBranch className="w-4 h-4" aria-hidden="true" />
                     View Repository
-                    <ExternalLink className="w-3 h-3 opacity-60" aria-hidden="true" />
+                    <ExternalLink
+                      className="w-3 h-3 opacity-60"
+                      aria-hidden="true"
+                    />
                   </a>
                 </div>
               </div>
@@ -236,8 +258,8 @@ export default function Experience() {
                 aria-hidden="true"
               >
                 <Zap className="w-3.5 h-3.5 text-yellow-400 flex-shrink-0" />
-                <p className="text-xs text-zinc-600">
-                  Building toward multi-agent LLM-powered DevOps automation
+                <p className="text-xs text-white-600">
+                  Learning & Building : Stateful Agentic workflows with LangGraph and Redis.
                 </p>
               </div>
             </div>
