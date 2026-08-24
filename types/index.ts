@@ -89,7 +89,8 @@ export interface CPAchievement {
   id: string;
   title: string;
   description: string;
-  certUrl?: string;
+  certUrl?: string;     
+  githubUrl?: string;
 }
 
 export interface SkillCategory {
