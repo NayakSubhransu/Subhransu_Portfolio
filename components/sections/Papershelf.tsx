@@ -14,15 +14,24 @@ export default function Papershelf() {
         <header className="mb-14">
           <p className="section-eyebrow mb-3">
             <BookOpen className="w-3 h-3" aria-hidden="true" />
-            Research
+            Research &amp; Curated Reading Log
           </p>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-100 tracking-tight">
-            My Own Papershelf
+            The Papershelf
           </h2>
-          <p className="mt-2 text-zinc-500 max-w-xl text-sm sm:text-base">
-            Foundational AI, LLM, and Distributed Systems papers I&apos;ve studied and applied to real systems.
-            Tap any card to reveal the engineering TL;DR.
+          <p className="max-w-2xl text-sm leading-relaxed text-zinc-400 sm:text-base">
+            A curated collection of landmark research papers I have studied and
+            deconstructed to master systems internals, trace architectural
+            evolution, and ground my engineering in first principles.
           </p>
+
+          {/* Interactive UX Microcopy */}
+          <div className="inline-flex items-center gap-1.5 rounded-md border border-zinc-800 bg-zinc-900/60 px-2.5 py-1 text-xs text-zinc-400 backdrop-blur-sm">
+            <span className="text-zinc-500">💡</span>
+            <span>
+              Click any paper for key architectural takeaways and TL;DRs
+            </span>
+          </div>
         </header>
 
         {/* Paper Cards Grid */}
@@ -39,8 +48,9 @@ export default function Papershelf() {
         </div>
 
         {/* Bottom note */}
-        <p className="mt-8 text-center text-xs text-zinc-600 font-mono">
-          All papers have been personally read, annotated, and applied in real engineering projects.
+        <p className="mt-8 text-center text-s text-white-600 font-mono">
+          All whitepapers have been independently read, annotated, and leveraged
+          to solve practical engineering challenges.
         </p>
       </div>
     </section>

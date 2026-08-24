@@ -57,7 +57,7 @@ export default function Projects() {
         <div className="mb-16">
           <h3 className="text-s font-mono font-semibold uppercase tracking-widest text-white-500 mb-6 flex items-center gap-2">
             <span className="w-4 h-px bg-white-700" aria-hidden="true" />
-            Flagship Systems
+            The Flagship Implementations
             <span className="w-4 h-px bg-white-700" aria-hidden="true" />
           </h3>
 
@@ -157,7 +157,7 @@ export default function Projects() {
         <div>
           <h3 className="text-s font-mono font-semibold uppercase tracking-widest text-white-500 mb-6 flex items-center gap-2">
             <span className="w-4 h-px bg-white-700" aria-hidden="true" />
-            Other Projects & Experiments
+            Other Projects & Learnings
             <span className="w-4 h-px bg-white-700" aria-hidden="true" />
           </h3>
 

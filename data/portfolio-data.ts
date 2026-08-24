@@ -466,7 +466,7 @@ export const papers: Paper[] = [
   },
   {
     id: "attention-2017",
-    title: "Attention Is All You Need (2017)",
+    title: "Attention Is All You Need (2017) - Transformers Paper",
     authors:
       "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Łukasz Kaiser, Illia Polosukhin",
     year: 2017,
