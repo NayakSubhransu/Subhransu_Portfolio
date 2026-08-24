@@ -53,7 +53,7 @@ export default function Skills() {
             Capabilities
           </p>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-100 tracking-tight">
-            Stack & Technical Skills
+            Tech-Stacks & Skills
           </h2>
           <p className="mt-2 text-zinc-500 max-w-xl text-sm sm:text-base">
             Tools, frameworks, and systems I work with across the full engineering stack.
@@ -131,9 +131,9 @@ export default function Skills() {
             </span>
             , and{" "}
             <span className="text-zinc-300 font-medium">
-              TypeScript for full-stack systems
+              Javascript/TypeScript for full-stack systems
             </span>
-            . Continuously exploring new distributed systems research and GenAI tooling.
+            . Continuously exploring new distributed systems research and GenAI/LLMs tooling.
           </p>
         </div>
       </div>

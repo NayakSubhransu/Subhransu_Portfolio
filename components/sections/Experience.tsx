@@ -46,7 +46,7 @@ export default function Experience() {
             Work Experience
           </h2>
           <p className="mt-2 text-zinc-500 max-w-xl text-sm sm:text-base">
-            Industry internships and engineering contributions — with verified credentials.
+            Industry internships and engineering contributions - with verified credentials.
           </p>
         </header>
 
@@ -144,7 +144,7 @@ export default function Experience() {
                             aria-label={`Verify employment at ${job.company}`}
                           >
                             <CheckCircle2 className="w-3 h-3 text-emerald-600" aria-hidden="true" />
-                            Verified — View Offer/Experience Letter
+                            Verified - View Offer/Experience Letter
                             <ExternalLink className="w-2.5 h-2.5" aria-hidden="true" />
                           </a>
                         </div>

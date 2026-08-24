@@ -7,7 +7,7 @@ export default function Papershelf() {
     <section
       id="papershelf"
       className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8"
-      aria-label="Papershelf — Research Reading List"
+      aria-label="Papershelf - Research Reading List"
     >
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}

@@ -1,5 +1,5 @@
 // ============================================================
-// data/portfolio-data.ts — All data extracted from data.md
+// data/portfolio-data.ts - All data extracted from data.md
 // ============================================================
 
 import type {
@@ -80,7 +80,7 @@ export const workExperience: WorkExperience[] = [
     company: "HealthyDay",
     companyUrl: "https://healthyday.co.in/",
     location: "Hybrid, India",
-    duration: "Nov 2025 – Present",
+    duration: "Nov 2025 - Present",
     type: "internship",
     verificationUrl:
       "https://drive.google.com/file/d/1Az1x0rX7HdN39RdKljrPsjGWNHC8vm1z/view?usp=drivesdk",
@@ -105,7 +105,7 @@ export const workExperience: WorkExperience[] = [
     company: "Hanyaa Auto Technologies",
     companyUrl: "https://hanyaatech.com/",
     location: "Hyderabad, India",
-    duration: "Jun 2025 – Jul 2025",
+    duration: "Jun 2025 - Jul 2025",
     type: "internship",
     verificationUrl:
       "https://drive.google.com/file/d/1g53s2MK5ZbcHWlSVwPpLtv_hyFDE0sAz/view?usp=sharing",
@@ -234,7 +234,7 @@ export const utilityProjects: UtilityProject[] = [
     repoUrl:
       "https://github.com/NayakSubhransu/GameDev-Hackathon--Medieval-Maze-Quest",
     stack: ["Unreal Engine 5", "C++", "Blueprints"],
-    award: "Game Dev Hackathon — 3rd Place",
+    award: "Game Dev Hackathon - 3rd Place",
   },
   {
     id: "campus-erp",
@@ -243,7 +243,7 @@ export const utilityProjects: UtilityProject[] = [
       "Role-based ERP portal for academic records, grade tracking, and administrative workflows.",
     repoUrl: "https://github.com/NayakSubhransu/ERP_System_WebAthon",
     stack: ["React", "Node.js", "Express", "PostgreSQL"],
-    award: "WebDev Hackathon — 3rd Place",
+    award: "WebDev Hackathon - 3rd Place",
   },
   {
     id: "gc-app",
@@ -266,7 +266,7 @@ export const cpPlatforms: CPPlatform[] = [
     problemsSolved: 1000,
     colorClass: "text-yellow-400",
     accentColor: "#FFA116",
-    badgeLabel: "Peak 1934",
+    badgeLabel: "Knight",
   },
   {
     id: "codechef",
@@ -274,7 +274,7 @@ export const cpPlatforms: CPPlatform[] = [
     handle: "quantum_07",
     profileUrl: "https://www.codechef.com/users/quantum_07",
     peakRating: 1682,
-    ratingLabel: "3-Star Division",
+    ratingLabel: "3-Star Division 2",
     colorClass: "text-amber-500",
     accentColor: "#F4A233",
     badgeLabel: "3★ Rated",
@@ -296,7 +296,7 @@ export const cpPlatforms: CPPlatform[] = [
 export const cpAchievements: CPAchievement[] = [
   {
     id: "inter-iit",
-    title: "Bronze Medal — Inter IIT Tech Meet 10.0 (2022)",
+    title: "Bronze Medal - Inter IIT Tech Meet 10.0 (2022)",
     description:
       "Secured 3rd place for IIT Bhubaneswar across 23 IITs in the prestigious Inter IIT Tech Meet.",
     certUrl:
@@ -304,13 +304,13 @@ export const cpAchievements: CPAchievement[] = [
   },
   {
     id: "gamedev-hackathon",
-    title: "Intra-IIT Hackathon — Game Dev 3rd Place",
+    title: "Intra-IIT Hackathon - Game Dev 3rd Place",
     description:
       "3rd place in Game Dev category building Medieval Maze Quest in Unreal Engine 5 with procedural AI.",
   },
   {
     id: "webdev-hackathon",
-    title: "Intra-IIT Hackathon — WebDev 3rd Place",
+    title: "Intra-IIT Hackathon - WebDev 3rd Place",
     description:
       "3rd place in WebDev category building a full-featured role-based ERP portal for academic administration.",
   },
@@ -338,11 +338,11 @@ export const skillCategories: SkillCategory[] = [
     icon: "Brain",
     skills: [
       "LangGraph",
-      "RAG / CRAG / Self-RAG Pipelines",
+      "GenAI", "LLMs",
+      "RAG Pipelines",
       "Vector DBs (Qdrant)",
       "PyTorch",
       "Hugging Face Transformers",
-      "Dia-TTS (1.6B Fine-tuning)",
       "TensorFlow",
       "Scikit-learn",
       "XGBoost",
@@ -350,25 +350,41 @@ export const skillCategories: SkillCategory[] = [
     ],
   },
   {
+    id: "core-cs",
+    title: "Core Computer Science",
+    icon: "Cpu",
+    skills: [
+      "Data Structures & Algorithms", 
+      "Operating Systems & Multithreading", 
+      "Computer Networks", 
+      "Database Management Systems (DBMS)", 
+      "Object-Oriented Programming (OOPs)",
+      "SOLID Principles",
+      "Design Patterns", 
+    ],
+  }, 
+  {
     id: "backend",
     title: "Backend & Distributed Systems",
     icon: "Server",
     skills: [
-      "Distributed Systems (Amazon Dynamo AP Model)",
+      "Distributed Systems Design",
       "Microservices Architecture & HLD",
       "FastAPI",
       "Node.js & Express.js",
       "RabbitMQ (AMQP)",
       "Socket.io (WebSockets)",
-      "Redis (5-Tier Cryptographic Caching)",
-      "REST API Design",
-      "Operating Systems & Multithreading",
-      "Computer Networking & DBMS",
+      "Data Modelling",
+      "PostgreSQL",
+      "BigQuery",
+      "MongoDB",
+      "Firestore",
+      "API Design",
     ],
   },
   {
     id: "frontend-devops",
-    title: "Frontend & DevOps",
+    title: "Frontend",
     icon: "Layers",
     skills: [
       "Next.js (App Router)",
@@ -376,13 +392,9 @@ export const skillCategories: SkillCategory[] = [
       "React Native",
       "Tailwind CSS",
       "Streamlit",
-      "PostgreSQL (CTEs, Window Functions)",
-      "Google BigQuery",
-      "MongoDB (2dsphere, TTL Indexes)",
-      "RocksDB",
-      "Firebase / Firestore",
       "Docker & Kubernetes Basics",
-      "Git & CI/CD Pipelines",
+      "Git",
+      "CI / CD",
       "Linux & Bash",
     ],
   },
@@ -451,26 +463,55 @@ export const papers: Paper[] = [
   },
 ];
 
-export const education: Education = {
-  institution: "Indian Institute of Technology (IIT) Bhubaneswar",
-  degree: "Integrated B.Tech",
-  major: "Mechanical System Design Engineering",
-  duration: "2021 – 2026",
-  cgpa: "8.3 / 10.0",
-  location: "Odisha, India",
-  coursework: [
-    "Data Structures & Algorithms",
-    "Operating Systems",
-    "Multithreading",
-    "Computer Networking",
-    "Database Management Systems",
-    "Distributed Systems",
-    "Microservices Architecture",
-    "Object-Oriented Programming",
-    "Design Patterns",
-  ],
-  logoHint: "IIT Bhubaneswar logo",
-};
+export const education : Education[] = [
+  {
+    institution: "Indian Institute of Technology ( IIT ) Bhubaneswar",
+    degree: "Integrated B.Tech",
+    major: "Mechanical System Design Engineering",
+    duration: "2021 - 2026",
+    cgpa: "8.3 / 10.0",
+    location: "Odisha, Bhubaneswar, India",
+    logoHint: "IIT Bhubaneswar logo",
+  },
+  {
+    institution: "Ascent Junior College",
+    degree: "Senior Secondary ( Grade 12 )",
+    major: "Science ( PCM )",
+    duration: "2018 - 2020",
+    cgpa: "9.82 / 10.0",
+    location: "Visakhapatnam, Andhra Pradesh, India",
+    logoHint: "Ascent Junior College logo",
+  },
+  {
+    institution: "Jeevan Jyothi Convent ( ICSE ) School",
+    degree: "Secondary School ( Grade 10 )",
+    duration: "2010 - 2018",
+    percentage: "93.2%",
+    location: "Koraput, Odisha, India",
+    logoHint: "Jeevan Jyothi Convent logo",
+  },
+];
+
+// export const education: Education = {
+//   institution: "Indian Institute of Technology (IIT) Bhubaneswar",
+//   degree: "Integrated B.Tech",
+//   major: "Mechanical System Design Engineering",
+//   duration: "2021 - 2026",
+//   cgpa: "8.3 / 10.0",
+//   location: "Odisha, India",
+//   // coursework: [
+//   //   "Data Structures & Algorithms",
+//   //   "Operating Systems",
+//   //   "Multithreading",
+//   //   "Computer Networking",
+//   //   "Database Management Systems",
+//   //   "Distributed Systems",
+//   //   "Microservices Architecture",
+//   //   "Object-Oriented Programming",
+//   //   "Design Patterns",
+//   // ],
+//   logoHint: "IIT Bhubaneswar logo",
+// };
 
 export const certifications: Certification[] = [
   {

@@ -1,5 +1,5 @@
 // ============================================================
-// types/index.ts — All TypeScript Data Definitions
+// types/index.ts - All TypeScript Data Definitions
 // ============================================================
 
 export interface SocialLink {
@@ -77,7 +77,7 @@ export interface CPPlatform {
   name: string;
   handle: string;
   profileUrl: string;
-  peakRating: number;
+  peakRating: number ;
   ratingLabel: string;
   problemsSolved?: number;
   colorClass: string;
@@ -117,14 +117,13 @@ export interface Paper {
 export interface Education {
   institution: string;
   degree: string;
-  major: string;
+  major?: string;
   duration: string;
-  cgpa: string;
+  cgpa?: string;
+  percentage?: string;
   location: string;
-  coursework: string[];
   logoHint: string;
 }
-
 export interface Certification {
   id: string;
   name: string;

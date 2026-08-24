@@ -17,7 +17,7 @@ export default function Hero() {
     <section
       id="home"
       className="relative min-h-[100svh] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 pt-20 pb-24 overflow-hidden"
-      aria-label="Hero — Introduction"
+      aria-label="Hero - Introduction"
     >
       {/* Background ambient gradients */}
       <div

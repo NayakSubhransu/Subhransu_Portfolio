@@ -33,7 +33,7 @@ export default function PaperCard({ paper }: { paper: Paper }) {
       className="glass-card rounded-2xl overflow-hidden"
       aria-label={paper.title}
     >
-      {/* Card Header — always visible */}
+      {/* Card Header - always visible */}
       <div className="p-5">
         <div className="flex items-start gap-3 mb-3">
           <span
@@ -80,7 +80,7 @@ export default function PaperCard({ paper }: { paper: Paper }) {
         />
       </button>
 
-      {/* TL;DR Drawer — collapsible */}
+      {/* TL;DR Drawer - collapsible */}
       <div
         id={`tldr-${paper.id}`}
         role="region"

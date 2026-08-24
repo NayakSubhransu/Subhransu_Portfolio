@@ -119,7 +119,7 @@ export default function Achievements() {
         </div>
 
         {/* ── Aggregate Stats Banner ── */}
-        <div
+        {/* <div
           className="mb-12 rounded-2xl border border-emerald-500/15 bg-gradient-to-r from-emerald-500/[0.05] to-indigo-500/[0.05] p-5 sm:p-6"
           aria-label="Combined competitive programming statistics"
         >
@@ -162,7 +162,7 @@ export default function Achievements() {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
 
         {/* ── Hackathon & Contest Honors ── */}
         <div>

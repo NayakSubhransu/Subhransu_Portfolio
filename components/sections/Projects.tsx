@@ -51,7 +51,7 @@ export default function Projects() {
             Projects Showcase
           </h2>
           <p className="mt-2 text-zinc-500 max-w-xl text-sm sm:text-base">
-            Production-grade systems and tools — built with real architectural trade-offs.
+            Production-grade systems and tools - built with real architectural trade-offs.
           </p>
         </header>
 
