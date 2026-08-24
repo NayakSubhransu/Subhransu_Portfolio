@@ -7,7 +7,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL("https://subhransu.dev"),
   title: {
-    default: "Subhransu Priyaranjan Nayak — Software Engineer & AI Developer",
+    default: "Subhransu Priyaranjan Nayak - Software Engineer & AI Developer",
     template: "%s | Subhransu Nayak",
   },
   description:
@@ -118,7 +118,7 @@ const jsonLd = {
     {
       "@type": "ProfilePage",
       "@id": "https://subhransu.dev/#profilepage",
-      name: "Subhransu Priyaranjan Nayak — Portfolio",
+      name: "Subhransu Priyaranjan Nayak - Portfolio",
       url: "https://subhransu.dev",
       mainEntity: { "@id": "https://subhransu.dev/#person" },
     },
@@ -134,7 +134,7 @@ const jsonLd = {
     },
     {
       "@type": "SoftwareSourceCode",
-      name: "DynamoCore — Highly Available Key-Value Storage",
+      name: "DynamoCore - Highly Available Key-Value Storage",
       description:
         "End-to-End implementation of the Amazon Dynamo (2007) distributed storage paper.",
       codeRepository: "https://github.com/NayakSubhransu/DynamoCore",
