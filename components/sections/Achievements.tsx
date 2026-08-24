@@ -120,7 +120,7 @@ export default function Achievements() {
         </div>
 
         {/* ── Hackathon & Contest Honors ── */}
-        
+
         <div>
           <h3 className="text-xs font-mono font-semibold uppercase tracking-widest text-zinc-500 mb-5 flex items-center gap-2">
             <span className="w-4 h-px bg-zinc-700" aria-hidden="true" />
@@ -166,13 +166,12 @@ export default function Achievements() {
                     </a>
                   )}
 
-                  {ach?.githubUrl && (
+                  {(ach as any).githubUrl && (
                     <a
-                      href={ach?.githubUrl}
+                      href={(ach as any).githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs text-emerald-400 hover:text-emerald-300 transition-colors"
-                      aria-label={`View GitHub repository for ${ach.title}`}
+                      className="inline-flex items-center gap-1.5 text-xs text-emerald-400 hover:text-emerald-300 transition-colors min-h-[36px]"
                     >
                       <span>View Repository</span>
                       <ExternalLink className="w-3 h-3" aria-hidden="true" />
