@@ -7,11 +7,11 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL("https://subhransu.dev"),
   title: {
-    default: "Subhransu Priyaranjan Nayak - Software Engineer & AI Developer",
+    default: "Subhransu Priyaranjan Nayak - Software Developer & AI Engineer",
     template: "%s | Subhransu Nayak",
   },
   description:
-    "Software Engineer & AI Developer specializing in High-Throughput Distributed Systems, Scalable Data Pipelines, and Agentic AI Architectures. IIT Bhubaneswar. LeetCode Peak 1934 (Top 4%).",
+    "Software Developer & AI Engineer specializing in High-Throughput Distributed Systems, Scalable Data Pipelines, and Agentic AI Architectures. IIT Bhubaneswar. LeetCode Peak 1934 (Top 4%).",
   keywords: [
     "Software Engineer",
     "AI Developer",
@@ -24,30 +24,35 @@ export const metadata: Metadata = {
     "IIT Bhubaneswar",
     "Subhransu Nayak",
   ],
-  authors: [{ name: "Subhransu Priyaranjan Nayak", url: "https://github.com/NayakSubhransu" }],
+  authors: [
+    {
+      name: "Subhransu Priyaranjan Nayak",
+      url: "https://github.com/NayakSubhransu",
+    },
+  ],
   creator: "Subhransu Priyaranjan Nayak",
   openGraph: {
     type: "profile",
     locale: "en_IN",
     url: "https://subhransu.dev",
     siteName: "Subhransu Nayak Portfolio",
-    title: "Subhransu Priyaranjan Nayak - Software Engineer & AI Developer",
+    title: "Subhransu Priyaranjan Nayak - Software Developer & AI Engineer",
     description:
-      "Backend · Distributed Systems · GenAI. Building DynamoCore, Enterprise RAG Orchestrator, and more.",
+      "Distributed Systems || Backend Development || Generative AI || Competitive Programming",
     images: [
       {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Subhransu Priyaranjan Nayak - Software Engineer & AI Developer",
+        alt: "Subhransu Priyaranjan Nayak - Software Developer & AI Engineer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Subhransu Priyaranjan Nayak - Software Engineer & AI Developer",
+    title: "Subhransu Priyaranjan Nayak - Software Developer & AI Engineer",
     description:
-      "Backend · Distributed Systems · GenAI. IIT Bhubaneswar. LeetCode Top 4%.",
+      "Distributed Systems || Backend Development || Generative AI || Competitive Programming",
     images: ["/opengraph-image"],
   },
   robots: {
@@ -81,9 +86,9 @@ const jsonLd = {
       "@type": "Person",
       "@id": "https://subhransu.dev/#person",
       name: "Subhransu Priyaranjan Nayak",
-      jobTitle: "Software Engineer & AI Developer",
+      jobTitle: "Software Developer & AI Engineer",
       description:
-        "Software Engineer & AI Developer specializing in High-Throughput Distributed Systems, Scalable Data Pipelines, and Agentic AI Architectures.",
+        "Software Developer & AI Engineer specializing in High-Throughput Distributed Systems, Scalable Data Pipelines, and Agentic AI Architectures.",
       url: "https://subhransu.dev",
       email: "subhransu.nayak.connect@gmail.com",
       address: {
