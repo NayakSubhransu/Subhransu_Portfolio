@@ -17,7 +17,7 @@ export default function Papershelf() {
             Research
           </p>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-100 tracking-tight">
-            Papershelf
+            My Own Papershelf
           </h2>
           <p className="mt-2 text-zinc-500 max-w-xl text-sm sm:text-base">
             Foundational AI, LLM, and Distributed Systems papers I&apos;ve studied and applied to real systems.

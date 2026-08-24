@@ -276,3 +276,103 @@ section[id] {
   transform: translateY(-8px) scale(0.95);
   transition: opacity 200ms ease, transform 200ms ease;
 }
+
+/* ── Photo Container (circular) ── */
+.photo-container {
+  position: relative;
+  border-radius: 9999px;
+  overflow: hidden;
+  cursor: pointer;
+  animation: photo-ring-pulse 3.5s ease-in-out infinite;
+  transition: box-shadow 0.5s ease;
+}
+
+.photo-container.revealed {
+  box-shadow:
+    0 0 0 2.5px rgba(34, 211, 238, 0.60),
+    0 0 36px rgba(34, 211, 238, 0.32),
+    0 0 80px rgba(34, 211, 238, 0.14);
+  animation: none;
+}
+
+/* ── Glow ring pulse (idle state) ── */
+@keyframes photo-ring-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 2.5px rgba(34, 211, 238, 0.35),
+      0 0 28px rgba(34, 211, 238, 0.18),
+      0 0 70px rgba(34, 211, 238, 0.07);
+  }
+  50% {
+    box-shadow:
+      0 0 0 2.5px rgba(34, 211, 238, 0.15),
+      0 0 16px rgba(34, 211, 238, 0.08),
+      0 0 45px rgba(34, 211, 238, 0.03);
+  }
+}
+
+/* ── Image blur states ── */
+.photo-img {
+  object-fit: cover;
+  object-position: top;
+  transition: filter 0.5s ease-out, transform 0.5s ease-out;
+  filter: blur(10px) brightness(0.7);
+  transform: scale(1.12);
+  will-change: filter, transform;
+}
+
+.photo-img.revealed {
+  filter: blur(0px) brightness(1);
+  transform: scale(1.05);
+}
+
+/* ── Hint overlay ── */
+.photo-hint {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: opacity 0.45s ease;
+  opacity: 1;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(7,11,20,0.30) 0%, rgba(7,11,20,0.52) 100%);
+}
+
+.photo-hint.revealed {
+  opacity: 0;
+}
+
+/* ── Scan-line reveal animation ── */
+@keyframes scan-reveal {
+  0%   { top: -4px; opacity: 0.9; }
+  100% { top: 110%; opacity: 0; }
+}
+
+.photo-container::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -4px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.7), transparent);
+  border-radius: 9999px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.photo-container.revealed::after {
+  animation: scan-reveal 0.55s ease-out forwards;
+}
+
+/* ── Hover / Tap label (auto-switches by device) ── */
+@media (hover: none) and (pointer: coarse) {
+  .photo-hint-label::before { content: "Tap"; }
+}
+@media (hover: hover) {
+  .photo-hint-label::before { content: "Hover"; }
+}
