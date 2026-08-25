@@ -152,7 +152,7 @@ export const flagshipProjects: FlagshipProject[] = [
     id: "dynamocore",
     name: "DynamoCore",
     subheading:
-      "End-to-End Implementation of the Amazon Dynamo (2007) Distributed Storage Paper",
+      "End-to-End Implementation of the Amazon Dynamo (2007) Distributed Key-Value Store",
     repoUrl: "https://github.com/NayakSubhransu/DynamoCore",
     paperUrl: "https://dl.acm.org/doi/epdf/10.1145/1323293.1294281",
     stack: [
