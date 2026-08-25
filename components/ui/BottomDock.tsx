@@ -13,14 +13,14 @@ import {
 } from "lucide-react";
 
 const DOCK_LINKS = [
-  { href: "#home",         label: "Home",     Icon: Home },
-  { href: "#experience",   label: "Work",     Icon: Briefcase },
-  { href: "#projects",     label: "Projects", Icon: FolderGit2 },
-  { href: "#achievements", label: "CP",       Icon: Trophy },
-  { href: "#skills",       label: "Skills",   Icon: Layers },
-  { href: "#papershelf",   label: "Papers",   Icon: BookOpen },
-  { href: "#education",    label: "Edu",      Icon: GraduationCap },
-  { href: "#contact",      label: "Contact",  Icon: Mail },
+  { href: "#home", label: "Home", Icon: Home },
+  { href: "#achievements", label: "CP", Icon: Trophy },
+  { href: "#experience", label: "Work", Icon: Briefcase },
+  { href: "#projects", label: "Projects", Icon: FolderGit2 },
+  { href: "#skills", label: "Skills", Icon: Layers },
+  { href: "#papershelf", label: "Papers", Icon: BookOpen },
+  { href: "#education", label: "Edu", Icon: GraduationCap },
+  { href: "#contact", label: "Contact", Icon: Mail },
 ] as const;
 
 export default function BottomDock() {
