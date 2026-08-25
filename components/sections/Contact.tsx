@@ -158,7 +158,7 @@ export default function Contact() {
             aria-label="Send a message"
           >
             <h3 className="text-base font-bold text-zinc-200 mb-5">
-              Send a Message
+              Drop a Message
             </h3>
             <ContactForm />
           </div>
