@@ -185,11 +185,11 @@ export default function ContactForm() {
           )}
         </button>
       </form>
-      
+
       <Toast toasts={toasts} onRemove={removeToast} />
     </>
   );
-} 
+}
 
 // "use client";
 
@@ -341,26 +341,26 @@ export default function ContactForm() {
 //           />
 //         </div>
 
-      //   {/* Submit */}
-      //   <button
-      //     type="submit"
-      //     disabled={isPending}
-      //     className="flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-zinc-900 font-bold text-sm transition-all duration-200 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-emerald-500 min-h-[48px]"
-      //     aria-label={isPending ? "Sending message..." : "Send message"}
-      //   >
-      //     {isPending ? (
-      //       <>
-      //         <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
-      //         Sending…
-      //       </>
-      //     ) : (
-      //       <>
-      //         <Send className="w-4 h-4" aria-hidden="true" />
-      //         Send Message
-      //       </>
-      //     )}
-      //   </button>
-      // </form>
+//   {/* Submit */}
+//   <button
+//     type="submit"
+//     disabled={isPending}
+//     className="flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-zinc-900 font-bold text-sm transition-all duration-200 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-emerald-500 min-h-[48px]"
+//     aria-label={isPending ? "Sending message..." : "Send message"}
+//   >
+//     {isPending ? (
+//       <>
+//         <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
+//         Sending…
+//       </>
+//     ) : (
+//       <>
+//         <Send className="w-4 h-4" aria-hidden="true" />
+//         Send Message
+//       </>
+//     )}
+//   </button>
+// </form>
 
 //       <Toast toasts={toasts} onRemove={removeToast} />
 //     </>
