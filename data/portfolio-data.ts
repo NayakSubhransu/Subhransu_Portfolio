@@ -503,6 +503,7 @@ export const papers: Paper[] = [
       ],
     },
   },
+  
 ];
 
 export const education : Education[] = [

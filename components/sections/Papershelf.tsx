@@ -40,9 +40,14 @@ export default function Papershelf() {
           role="list"
           aria-label="Research papers"
         >
-          {papers.map((paper) => (
+          {/* {papers.map((paper) => (
             <div key={paper.id} role="listitem">
               <PaperCard paper={paper} />
+            </div>
+          ))} */}
+          {papers.map((paper, index) => (
+            <div key={paper.id} role="listitem">
+              <PaperCard paper={paper} index={index} />
             </div>
           ))}
         </div>
