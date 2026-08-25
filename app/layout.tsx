@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     type: "profile",
     locale: "en_IN",
     url: "https://subhransu.dev",
-    siteName: "Portfolio : Subhransu",
+    siteName: "Subhransu Nayak Portfolio",
     title: "Subhransu Priyaranjan Nayak - Software Developer & AI Engineer",
     description:
       "Distributed Systems || Backend Development || Generative AI || Competitive Programming",

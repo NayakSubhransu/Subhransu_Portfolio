@@ -1,13 +1,12 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import {
   ExternalLink, ChevronDown, Download,
   Lightbulb, Zap, BookMarked, AlertCircle, Sparkles, Target, Clock,
 } from "lucide-react";
 import type { Paper } from "@/types";
 
-/* ── Golden-ratio hue spread ─────────────────────────────────────────────── */
 const GOLDEN_ANGLE = 137.508;
 
 function hslToRgb(h: number, s: number, l: number): [number, number, number] {
@@ -26,8 +25,7 @@ function getCardColors(index: number) {
   const rgbLight = hslToRgb(hue, sat, 80).join(",");
   const rgbDeep  = hslToRgb(hue, 45, 7).join(",");
   return {
-    hue,
-    sat,
+    hue, sat,
     topGlow:     `rgba(${rgb}, 0.14)`,
     iconColor:   `hsl(${hue}, ${sat}%, 70%)`,
     iconBg:      `rgba(${rgb}, 0.15)`,
@@ -49,7 +47,6 @@ function getCardColors(index: number) {
   };
 }
 
-/* ── Read-time estimator ─────────────────────────────────────────────────── */
 function estimateReadMinutes(paper: Paper): number {
   const words = [
     paper.tldr.problem,
@@ -59,7 +56,6 @@ function estimateReadMinutes(paper: Paper): number {
   return Math.max(2, Math.ceil(words / 200) + 8);
 }
 
-/* ── TL;DR section row ───────────────────────────────────────────────────── */
 function TldrRow({
   icon: Icon,
   dotColor,
@@ -85,7 +81,6 @@ function TldrRow({
   );
 }
 
-/* ── Main Component ──────────────────────────────────────────────────────── */
 export default function PaperCard({
   paper,
   index = 0,
@@ -95,41 +90,50 @@ export default function PaperCard({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
   const cardRef = useRef<HTMLElement>(null);
   const toggle = useCallback(() => setIsOpen((v) => !v), []);
   const c = getCardColors(index);
   const readMins = estimateReadMinutes(paper);
 
+  // Detect touch device to disable 3D tilt
+  useEffect(() => {
+    setIsTouchDevice(window.matchMedia("(hover: none) and (pointer: coarse)").matches);
+  }, []);
+
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    if (isTouchDevice) return;
     const card = cardRef.current;
     if (!card) return;
     const rect = card.getBoundingClientRect();
     const dx = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
     const dy = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
     card.style.transform = `perspective(800px) rotateX(${(-dy * 4).toFixed(2)}deg) rotateY(${(dx * 4).toFixed(2)}deg) scale(1.015)`;
-  }, []);
+  }, [isTouchDevice]);
 
   const handleMouseEnter = useCallback(() => {
+    if (isTouchDevice) return;
     setIsHovered(true);
     const card = cardRef.current;
     if (!card) return;
     card.style.borderColor = c.hoverBorder;
     card.style.boxShadow = c.hoverShadow;
-  }, [c]);
+  }, [c, isTouchDevice]);
 
   const handleMouseLeave = useCallback(() => {
+    if (isTouchDevice) return;
     setIsHovered(false);
     const card = cardRef.current;
     if (!card) return;
     card.style.transform = "";
     card.style.borderColor = "";
     card.style.boxShadow = "";
-  }, []);
+  }, [isTouchDevice]);
 
   return (
     <article
       ref={cardRef}
-      className="group relative flex flex-col rounded-2xl overflow-hidden border border-[--border-subtle] bg-[--bg-card] transition-all duration-300 will-change-transform"
+      className="group relative flex flex-col rounded-2xl overflow-hidden border border-[--border-subtle] bg-[--bg-card] transition-all duration-300 will-change-transform h-full"
       onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -139,9 +143,7 @@ export default function PaperCard({
       {/* Top glow */}
       <div
         className="absolute top-0 left-0 right-0 h-28 pointer-events-none z-0"
-        style={{
-          background: `linear-gradient(to bottom, ${c.topGlow}, transparent)`,
-        }}
+        style={{ background: `linear-gradient(to bottom, ${c.topGlow}, transparent)` }}
         aria-hidden="true"
       />
 
@@ -156,7 +158,7 @@ export default function PaperCard({
         aria-hidden="true"
       />
 
-      {/* Catalog index number */}
+      {/* Catalog index */}
       <div
         className="absolute top-3.5 right-4 z-10 font-mono text-[10px] font-black tracking-widest select-none"
         style={{ color: c.indexText, opacity: 0.6 }}
@@ -166,7 +168,7 @@ export default function PaperCard({
       </div>
 
       {/* ── Header ── */}
-      <div className="relative z-10 p-5 pb-3 flex flex-col gap-3 pr-12">
+      <div className="relative z-10 p-4 sm:p-5 pb-3 flex flex-col gap-3 pr-10 sm:pr-12">
         <div className="flex items-start gap-3">
           <div
             className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-xl border shadow-sm transition-all duration-300"
@@ -186,12 +188,12 @@ export default function PaperCard({
             >
               {paper.title}
             </h3>
-            <p
+            {/* <p
               className="text-[10px] text-[--text-faint] mt-1 font-mono truncate"
               title={paper.authors}
             >
               {paper.authors}
-            </p>
+            </p> */}
           </div>
         </div>
 
@@ -212,21 +214,20 @@ export default function PaperCard({
             {paper.category}
           </span>
 
-          <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-mono font-semibold border border-[--border-subtle] text-[--text-faint] bg-white/[0.02]">
-            <Clock className="w-2.5 h-2.5" aria-hidden="true" />~{readMins} min
-            read
-          </span>
+          {/* <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-mono font-semibold border border-[--border-subtle] text-[--text-faint] bg-white/[0.02]">
+            <Clock className="w-2.5 h-2.5" aria-hidden="true" />~{readMins} min read
+          </span> */}
         </div>
       </div>
 
       {/* ── TL;DR Toggle ── */}
-      <div className="relative z-10 px-5 pb-4">
+      <div className="relative z-10 px-4 sm:px-5 pb-4">
         <button
           type="button"
           onClick={toggle}
           aria-expanded={isOpen}
           aria-controls={`tldr-${paper.id}`}
-          className={`w-full flex items-center justify-between px-4 py-2.5 rounded-xl border text-xs font-semibold transition-all duration-200 min-h-[40px] ${
+          className={`w-full flex items-center justify-between px-4 py-2.5 rounded-xl border text-xs font-semibold transition-all duration-200 min-h-[44px] ${
             isOpen
               ? "border-amber-500/30 bg-amber-500/[0.08] text-amber-300"
               : "border-[--border-subtle] bg-white/[0.02] text-[--text-muted] hover:border-[--border-medium] hover:bg-white/[0.04] hover:text-[--text-secondary]"
@@ -259,52 +260,29 @@ export default function PaperCard({
           className="overflow-y-auto max-h-72 overscroll-contain scrollbar-thin"
           style={{ background: c.drawerBg }}
         >
-          <div className="px-5 py-4 flex flex-col gap-4">
-            <TldrRow
-              icon={AlertCircle}
-              dotColor="bg-red-400/70"
-              label="The Problem"
-            >
+          <div className="px-4 sm:px-5 py-4 flex flex-col gap-4">
+            <TldrRow icon={AlertCircle} dotColor="bg-red-400/70" label="The Problem">
               <p className="text-xs text-[--text-secondary] leading-relaxed">
                 {paper.tldr.problem}
               </p>
             </TldrRow>
 
-            <div
-              className="h-px bg-gradient-to-r from-transparent via-[--border-subtle] to-transparent"
-              aria-hidden="true"
-            />
+            <div className="h-px bg-gradient-to-r from-transparent via-[--border-subtle] to-transparent" aria-hidden="true" />
 
-            <TldrRow
-              icon={Sparkles}
-              dotColor="bg-amber-400/70"
-              label="Core Breakthrough"
-            >
+            <TldrRow icon={Sparkles} dotColor="bg-amber-400/70" label="Core Breakthrough">
               <p className="text-xs text-[--text-secondary] leading-relaxed">
                 {paper.tldr.breakthrough}
               </p>
             </TldrRow>
 
-            <div
-              className="h-px bg-gradient-to-r from-transparent via-[--border-subtle] to-transparent"
-              aria-hidden="true"
-            />
+            <div className="h-px bg-gradient-to-r from-transparent via-[--border-subtle] to-transparent" aria-hidden="true" />
 
-            <TldrRow
-              icon={Target}
-              dotColor="bg-cyan-400/70"
-              label="Engineering Takeaways"
-            >
+            <TldrRow icon={Target} dotColor="bg-cyan-400/70" label="Engineering Takeaways">
               <ul className="flex flex-col gap-2" role="list">
                 {paper.tldr.takeaways.map((tw, i) => (
                   <li key={i} className="flex items-start gap-2">
-                    <Zap
-                      className="w-3 h-3 text-[--accent-cyan] flex-shrink-0 mt-0.5 opacity-60"
-                      aria-hidden="true"
-                    />
-                    <span className="text-xs text-[--text-secondary] leading-relaxed">
-                      {tw}
-                    </span>
+                    <Zap className="w-3 h-3 text-[--accent-cyan] flex-shrink-0 mt-0.5 opacity-60" aria-hidden="true" />
+                    <span className="text-xs text-[--text-secondary] leading-relaxed">{tw}</span>
                   </li>
                 ))}
               </ul>
@@ -314,12 +292,12 @@ export default function PaperCard({
       </div>
 
       {/* ── Footer ── */}
-      <div className="relative z-10 flex items-center gap-2 px-5 py-4 border-t border-[--border-subtle] mt-auto bg-white/[0.015]">
+      <div className="relative z-10 flex items-center gap-2 px-4 sm:px-5 py-4 border-t border-[--border-subtle] mt-auto bg-white/[0.015]">
         <a
           href={paper.pdfPath}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1.5 px-4 py-2 rounded-lg border text-xs font-bold transition-all duration-200 min-h-[40px]"
+          className="flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-lg border text-xs font-bold transition-all duration-200 min-h-[40px]"
           style={{
             background: c.btnBg,
             borderColor: c.btnBorder,
@@ -341,7 +319,7 @@ export default function PaperCard({
           href={paper.originalUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1.5 px-4 py-2 rounded-lg border border-[--border-subtle] text-[--text-muted] hover:text-[--text-secondary] hover:border-[--border-medium] hover:bg-white/[0.03] text-xs font-bold transition-all duration-200 min-h-[40px]"
+          className="flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-lg border border-[--border-subtle] text-[--text-muted] hover:text-[--text-secondary] hover:border-[--border-medium] hover:bg-white/[0.03] text-xs font-bold transition-all duration-200 min-h-[40px]"
           aria-label={`View source paper for ${paper.title}`}
         >
           <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />

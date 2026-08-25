@@ -42,17 +42,17 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8"
+      className="py-16 sm:py-20 lg:py-28 px-4 sm:px-6 lg:px-8"
       aria-label="Technical Skills"
     >
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <header className="mb-14">
+        <header className="mb-10 sm:mb-14">
           <p className="section-eyebrow mb-3">
             <Layers className="w-3 h-3" aria-hidden="true" />
             Capabilities
           </p>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-100 tracking-tight">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-zinc-100 tracking-tight">
             Tech-Stacks & Skills
           </h2>
           <p className="mt-2 text-zinc-500 max-w-xl text-sm sm:text-base">
@@ -60,8 +60,8 @@ export default function Skills() {
           </p>
         </header>
 
-        {/* Skills Grid */}
-        <div className="grid sm:grid-cols-2 gap-5">
+        {/* Skills Grid — 1 col on mobile, 2 on sm+ */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
           {skillCategories.map((category) => {
             const Icon = ICON_MAP[category.icon] ?? Layers;
             const style = CATEGORY_STYLES[category.id] ?? CATEGORY_STYLES["languages"];
@@ -69,7 +69,7 @@ export default function Skills() {
             return (
               <article
                 key={category.id}
-                className={`relative overflow-hidden rounded-2xl border ${style.border} glass-card p-5 sm:p-6`}
+                className={`relative overflow-hidden rounded-2xl border ${style.border} glass-card p-4 sm:p-5 lg:p-6`}
                 aria-label={`${category.title} skills`}
               >
                 {/* Background gradient */}
@@ -79,10 +79,9 @@ export default function Skills() {
                 />
 
                 <div className="relative">
-                  {/* Category Header */}
                   <div className="flex items-center gap-2.5 mb-4">
                     <span
-                      className={`flex items-center justify-center w-8 h-8 rounded-lg border ${style.border} bg-white/[0.03]`}
+                      className={`flex items-center justify-center w-8 h-8 rounded-lg border ${style.border} bg-white/[0.03] flex-shrink-0`}
                       aria-hidden="true"
                     >
                       <Icon className={`w-4 h-4 ${style.accent}`} />
@@ -92,7 +91,7 @@ export default function Skills() {
                     </h3>
                   </div>
 
-                  {/* Skills Tags */}
+                  {/* Skills Tags — naturally wrapping */}
                   <div
                     className="flex flex-wrap gap-2"
                     role="list"
@@ -114,25 +113,19 @@ export default function Skills() {
           })}
         </div>
 
-        {/* Bottom: Open Source / Community Note */}
+        {/* Bottom note */}
         <div
-          className="mt-8 p-4 sm:p-5 rounded-xl border border-white/[0.05] bg-white/[0.02] flex flex-col sm:flex-row items-start sm:items-center gap-3"
+          className="mt-6 sm:mt-8 p-4 sm:p-5 rounded-xl border border-white/[0.5] bg-white/[0.02] flex flex-col sm:flex-row items-start sm:items-center gap-3"
           aria-hidden="true"
         >
           <Code2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-          <p className="text-s text-zinc-500 leading-relaxed">
+          <p className="text-xs sm:text-sm text-zinc-500 leading-relaxed">
             Most comfortable with{" "}
-            <span className="text-zinc-300 font-medium">
-              C++ for competitive programming
-            </span>
+            <span className="text-zinc-300 font-medium">C++ for competitive programming</span>
             ,{" "}
-            <span className="text-zinc-300 font-medium">
-              Python for AI/ML pipelines
-            </span>
+            <span className="text-zinc-300 font-medium">Python for AI/ML pipelines</span>
             , and{" "}
-            <span className="text-zinc-300 font-medium">
-              Javascript/TypeScript for full-stack systems
-            </span>
+            <span className="text-zinc-300 font-medium">Javascript/TypeScript for full-stack systems</span>
             . Continuously exploring new distributed systems research and GenAI/LLMs tooling.
           </p>
         </div>

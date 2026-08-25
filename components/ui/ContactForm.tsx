@@ -30,10 +30,8 @@ export default function ContactForm() {
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       if (isPending) return;
-
       setIsPending(true);
       const formData = new FormData(e.currentTarget);
-
       try {
         const result = await sendContactMessage(formData);
         if (result.success) {
@@ -60,8 +58,8 @@ export default function ContactForm() {
         aria-label="Contact form"
         className="flex flex-col gap-4"
       >
-        {/* Name & Email row */}
-        <div className="grid sm:grid-cols-2 gap-4">
+        {/* Name & Email — stacked on mobile, side-by-side on sm+ */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="flex flex-col gap-1.5">
             <label
               htmlFor="contact-name"
@@ -154,15 +152,12 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={isPending}
-          className="flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-zinc-900 font-bold text-sm transition-all duration-200 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-emerald-500 min-h-[44px]"
+          className="flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-zinc-900 font-bold text-sm transition-all duration-200 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-emerald-500 min-h-[48px]"
           aria-label={isPending ? "Sending message..." : "Send message"}
         >
           {isPending ? (
             <>
-              <Loader2
-                className="w-4 h-4 animate-spin"
-                aria-hidden="true"
-              />
+              <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
               Sending…
             </>
           ) : (
@@ -174,7 +169,6 @@ export default function ContactForm() {
         </button>
       </form>
 
-      {/* Toast notifications */}
       <Toast toasts={toasts} onRemove={removeToast} />
     </>
   );

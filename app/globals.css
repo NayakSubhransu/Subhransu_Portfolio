@@ -48,11 +48,21 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Prevent text size adjustment on orientation change */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 /* ─── Section Scroll Target ──────────────────────────────────────────────────── */
 section[id] {
   scroll-margin-top: 72px;
+}
+
+/* On mobile the bottom dock takes space — bump scroll target up */
+@media (max-width: 1023px) {
+  section[id] {
+    scroll-margin-top: 80px;
+  }
 }
 
 /* ─── Custom Scrollbar ────────────────────────────────────────────────────── */
@@ -198,10 +208,19 @@ section[id] {
 /* ─── Bottom Dock ────────────────────────────────────────────────────────── */
 .bottom-dock {
   position: fixed;
-  bottom: 1.25rem;
+  bottom: 1rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 50;
+  /* safe area for notched phones */
+  bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+}
+
+/* ─── Mobile bottom padding (so content isn't hidden behind dock) ─── */
+@media (max-width: 1023px) {
+  body {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
 }
 
 /* ─── Paper Card TL;DR Drawer ────────────────────────────────────────────── */
@@ -378,7 +397,6 @@ section[id] {
 }
 
 /* ── PaperCard TL;DR scrollbar ── */
-
 .scrollbar-thin::-webkit-scrollbar { width: 3px; }
 .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
 .scrollbar-thin::-webkit-scrollbar-thumb {
@@ -387,4 +405,58 @@ section[id] {
 }
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
   background: rgba(34, 211, 238, 0.4);
+}
+
+/* ─── Mobile-specific improvements ──────────────────────────────────────── */
+
+/* Ensure tap targets on mobile are at least 44px */
+@media (hover: none) and (pointer: coarse) {
+  a, button {
+    min-height: 44px;
+  }
+
+  /* Disable 3D tilt on paper cards on touch */
+  .paper-card-tilt {
+    transform: none !important;
+  }
+
+  /* Remove hover-only box shadow changes on cards */
+  .glass-card:hover {
+    background: rgba(17, 24, 39, 0.6);
+    border-color: var(--border-subtle);
+  }
+}
+
+/* ─── Hero grid — reduce on mobile ──────────────────────────────────────── */
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(16,185,129,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16,185,129,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .hero-grid {
+    background-size: 40px 40px;
+    opacity: 0.6;
+  }
+}
+
+/* ─── Prevent horizontal overflow from ambient glows on mobile ─────────── */
+@media (max-width: 768px) {
+  section {
+    overflow-x: hidden;
+  }
+}
+
+/* ─── Mobile dock safe area extra padding for footer ────────────────────── */
+@media (max-width: 1023px) {
+  footer {
+    padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px));
+  }
 }
