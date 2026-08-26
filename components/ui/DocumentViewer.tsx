@@ -21,57 +21,100 @@ type AccentColor = "emerald" | "indigo";
 interface DocumentViewerProps {
   title: string;
   subtitle: string;
-  filePath: string;       // e.g. "/resume.pdf"
-  downloadName: string;   // e.g. "Subhransu_Nayak_Resume.pdf"
-  backHref?: string;      // Defaults to "/"
+  filePath: string;
+  downloadName: string;
+  backHref?: string;
   accentColor: AccentColor;
 }
 
 // ── Per-accent design tokens ─────────────────────────────────────────────────
 const ACCENT = {
   emerald: {
-    eyebrow:     "text-emerald-400",
-    iconColor:   "text-emerald-400",
-    iconRing:    "bg-emerald-500/10 border-emerald-500/25",
-    badgePill:   "bg-emerald-500/10 border-emerald-500/25 text-emerald-300",
-    badgeDot:    "bg-emerald-400",
-    glow:        "rgba(16,185,129,0.08)",
-    downloadBtn: "bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-zinc-900 shadow-lg shadow-emerald-500/20",
-    navBtn:      "text-emerald-300 border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20",
-    divider:     "rgba(16,185,129,0.25)",
+    eyebrow: "text-emerald-400",
+    iconColor: "text-emerald-400",
+    iconRing: "bg-emerald-500/10 border-emerald-500/25",
+    badgePill: "bg-emerald-500/10 border-emerald-500/25 text-emerald-300",
+    badgeDot: "bg-emerald-400",
+    glow: "rgba(16,185,129,0.08)",
+    downloadBtn:
+      "bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-zinc-900 shadow-lg shadow-emerald-500/20",
+    navBtn:
+      "text-emerald-300 border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20",
+    divider: "rgba(16,185,129,0.25)",
   },
   indigo: {
-    eyebrow:     "text-indigo-400",
-    iconColor:   "text-indigo-400",
-    iconRing:    "bg-indigo-500/10 border-indigo-500/25",
-    badgePill:   "bg-indigo-500/10 border-indigo-500/25 text-indigo-300",
-    badgeDot:    "bg-indigo-400",
-    glow:        "rgba(99,102,241,0.08)",
-    downloadBtn: "bg-indigo-500 hover:bg-indigo-400 active:bg-indigo-600 text-white shadow-lg shadow-indigo-500/20",
-    navBtn:      "text-indigo-300 border-indigo-500/30 bg-indigo-500/10 hover:bg-indigo-500/20",
-    divider:     "rgba(99,102,241,0.25)",
+    eyebrow: "text-indigo-400",
+    iconColor: "text-indigo-400",
+    iconRing: "bg-indigo-500/10 border-indigo-500/25",
+    badgePill: "bg-indigo-500/10 border-indigo-500/25 text-indigo-300",
+    badgeDot: "bg-indigo-400",
+    glow: "rgba(99,102,241,0.08)",
+    downloadBtn:
+      "bg-indigo-500 hover:bg-indigo-400 active:bg-indigo-600 text-white shadow-lg shadow-indigo-500/20",
+    navBtn:
+      "text-indigo-300 border-indigo-500/30 bg-indigo-500/10 hover:bg-indigo-500/20",
+    divider: "rgba(99,102,241,0.25)",
   },
 } as const;
 
-// ── PDF.js Dynamic Loader ─────────────────────────────────────────────────────
+// ── PDF.js Types (Replaces `any` for strict TypeScript) ──────────────────────
+interface PDFViewport {
+  width: number;
+  height: number;
+}
+
+interface PDFRenderTask {
+  promise: Promise<void>;
+  cancel: () => void;
+}
+
+interface PDFPageProxy {
+  getViewport: (params: { scale: number }) => PDFViewport;
+  render: (params: {
+    canvasContext: CanvasRenderingContext2D | null;
+    viewport: PDFViewport;
+  }) => PDFRenderTask;
+}
+
+interface PDFDocumentProxy {
+  numPages: number;
+  getPage: (pageNumber: number) => Promise<PDFPageProxy>;
+}
+
+interface PDFLoadingTask {
+  promise: Promise<PDFDocumentProxy>;
+}
+
+interface PDFGlobalLib {
+  GlobalWorkerOptions: {
+    workerSrc: string;
+  };
+  getDocument: (src: string) => PDFLoadingTask;
+}
+
 declare global {
   interface Window {
-    pdfjsLib?: any;
+    pdfjsLib?: PDFGlobalLib;
   }
 }
 
-async function loadPdfJs() {
+async function loadPdfJs(): Promise<PDFGlobalLib | null> {
   if (typeof window === "undefined") return null;
   if (window.pdfjsLib) return window.pdfjsLib;
 
   return new Promise((resolve, reject) => {
     const script = document.createElement("script");
-    script.src = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
+    script.src =
+      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
     script.onload = () => {
       const lib = window.pdfjsLib;
-      lib.GlobalWorkerOptions.workerSrc =
-        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-      resolve(lib);
+      if (lib) {
+        lib.GlobalWorkerOptions.workerSrc =
+          "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+        resolve(lib);
+      } else {
+        reject(new Error("PDF.js failed to initialize"));
+      }
     };
     script.onerror = () => reject(new Error("Failed to load PDF engine"));
     document.head.appendChild(script);
@@ -93,8 +136,8 @@ export default function DocumentViewer({
   const [renderTrigger, setRenderTrigger] = useState<number>(0);
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const pdfDocRef = useRef<any>(null);
-  const activeTasksRef = useRef<any[]>([]);
+  const pdfDocRef = useRef<PDFDocumentProxy | null>(null);
+  const activeTasksRef = useRef<PDFRenderTask[]>([]);
   const a = ACCENT[accentColor];
   const targetHome = backHref || "/";
 
@@ -116,7 +159,7 @@ export default function DocumentViewer({
         pdfDocRef.current = doc;
         setNumPages(doc.numPages);
         setIsLoading(false);
-      } catch (err) {
+      } catch (err: unknown) {
         if (!isCancelled) {
           console.error("PDF load error:", err);
           setIsLoading(false);
@@ -147,6 +190,8 @@ export default function DocumentViewer({
     container.innerHTML = "";
 
     async function renderPages() {
+      if (!pdfDocRef.current) return;
+
       for (let pageNum = 1; pageNum <= numPages; pageNum++) {
         try {
           const page = await pdfDocRef.current.getPage(pageNum);
@@ -179,8 +224,13 @@ export default function DocumentViewer({
           const renderTask = page.render(renderContext);
           activeTasksRef.current.push(renderTask);
           await renderTask.promise;
-        } catch (err: any) {
-          if (err?.name !== "RenderingCancelledException") {
+        } catch (err: unknown) {
+          if (
+            err &&
+            typeof err === "object" &&
+            "name" in err &&
+            (err as { name: string }).name !== "RenderingCancelledException"
+          ) {
             console.error("Page render error:", err);
           }
         }
@@ -213,9 +263,7 @@ export default function DocumentViewer({
       {/* ── Top Navigation Bar ── */}
       <header className="sticky top-0 z-40 bg-[#09090b]/90 backdrop-blur-md border-b border-white/[0.06]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-3">
-          {/* Left: Back Link & Breadcrumb */}
           <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-            {/* Back Button */}
             <Link
               href={targetHome}
               className="flex items-center justify-center w-9 h-9 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-white/[0.07] active:bg-white/[0.12] transition-all flex-shrink-0 cursor-pointer"
@@ -224,15 +272,19 @@ export default function DocumentViewer({
               <ArrowLeft className="w-4 h-4" />
             </Link>
 
-            <span className="w-px h-5 bg-white/[0.08] flex-shrink-0" aria-hidden="true" />
+            <span
+              className="w-px h-5 bg-white/[0.08] flex-shrink-0"
+              aria-hidden="true"
+            />
 
-            {/* Clickable Brand Identifier */}
             <Link
               href={targetHome}
               className="flex items-center gap-2 group flex-shrink-0 cursor-pointer"
               aria-label="Navigate to landing page"
             >
-              <span className={`flex items-center justify-center w-7 h-7 rounded-lg border ${a.iconRing} group-hover:scale-105 transition-transform`}>
+              <span
+                className={`flex items-center justify-center w-7 h-7 rounded-lg border ${a.iconRing} group-hover:scale-105 transition-transform`}
+              >
                 <Terminal className={`w-3.5 h-3.5 ${a.iconColor}`} />
               </span>
               <span className="font-mono text-xs font-semibold text-zinc-400 group-hover:text-zinc-100 transition-colors">
@@ -246,7 +298,6 @@ export default function DocumentViewer({
             </div>
           </div>
 
-          {/* Right: Actions & Download */}
           <div className="flex items-center gap-2 flex-shrink-0">
             <a
               href={filePath}
@@ -266,7 +317,9 @@ export default function DocumentViewer({
             >
               <Download className="w-3.5 h-3.5" />
               <span>Download</span>
-              <span className="hidden sm:inline text-[10px] opacity-70">PDF</span>
+              <span className="hidden sm:inline text-[10px] opacity-70">
+                PDF
+              </span>
             </a>
           </div>
         </div>
@@ -288,17 +341,20 @@ export default function DocumentViewer({
               <FileText className={`w-5 h-5 sm:w-6 sm:h-6 ${a.iconColor}`} />
             </div>
             <div className="flex-1 min-w-0">
-              <p className={`text-[10px] font-mono font-black uppercase tracking-[0.2em] ${a.eyebrow} mb-0.5`}>
+              <p
+                className={`text-[10px] font-mono font-black uppercase tracking-[0.2em] ${a.eyebrow} mb-0.5`}
+              >
                 {title}
               </p>
               <h1 className="text-sm sm:text-base font-extrabold text-zinc-100 tracking-tight leading-tight truncate">
                 {subtitle}
               </h1>
-              <p className="text-[11px] text-zinc-600 font-mono mt-0.5 truncate">{downloadName}</p>
+              <p className="text-[11px] text-zinc-600 font-mono mt-0.5 truncate">
+                {downloadName}
+              </p>
             </div>
           </div>
 
-          {/* Interactive Zoom Controls */}
           {!isLoading && !hasError && (
             <div className="flex items-center gap-1 bg-zinc-900/80 border border-white/[0.08] p-1 rounded-xl shadow-lg">
               <button
@@ -337,29 +393,38 @@ export default function DocumentViewer({
       {/* ── Document View Canvas Stage ── */}
       <main className="flex-1 flex flex-col p-3 sm:p-6 items-center">
         <div className="relative w-full max-w-5xl rounded-2xl border border-white/[0.06] bg-[#0c0c0e] min-h-[75vh] flex flex-col overflow-hidden">
-          {/* Loading Skeleton */}
           {isLoading && (
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-5 z-20 bg-[#0c0c0e]">
-              <div className={`flex items-center justify-center w-16 h-16 rounded-2xl border ${a.iconRing}`}>
+              <div
+                className={`flex items-center justify-center w-16 h-16 rounded-2xl border ${a.iconRing}`}
+              >
                 <FileText className={`w-8 h-8 ${a.iconColor} animate-pulse`} />
               </div>
               <div className="text-center">
-                <p className={`text-sm font-semibold font-mono ${a.eyebrow}`}>Rendering PDF document…</p>
-                <p className="text-xs text-zinc-600 mt-1">Generating high-resolution canvas</p>
+                <p className={`text-sm font-semibold font-mono ${a.eyebrow}`}>
+                  Rendering PDF document…
+                </p>
+                <p className="text-xs text-zinc-600 mt-1">
+                  Generating high-resolution canvas
+                </p>
               </div>
             </div>
           )}
 
-          {/* Error State */}
           {hasError && (
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 px-6 text-center bg-[#0c0c0e] z-30">
-              <div className={`flex items-center justify-center w-16 h-16 rounded-2xl border ${a.iconRing}`}>
+              <div
+                className={`flex items-center justify-center w-16 h-16 rounded-2xl border ${a.iconRing}`}
+              >
                 <AlertCircle className={`w-8 h-8 ${a.iconColor}`} />
               </div>
               <div>
-                <h2 className="text-base font-bold text-zinc-200 mb-2">Failed to load document</h2>
+                <h2 className="text-base font-bold text-zinc-200 mb-2">
+                  Failed to load document
+                </h2>
                 <p className="text-sm text-zinc-500 max-w-sm leading-relaxed">
-                  Could not parse the PDF file from <code className="font-mono text-zinc-400">{filePath}</code>.
+                  Could not parse the PDF file from{" "}
+                  <code className="font-mono text-zinc-400">{filePath}</code>.
                 </p>
               </div>
               <div className="flex items-center gap-3">
@@ -383,7 +448,6 @@ export default function DocumentViewer({
             </div>
           )}
 
-          {/* Canvas Scroll Container */}
           <div
             ref={containerRef}
             className="w-full flex-1 overflow-x-auto overflow-y-auto p-4 sm:p-8 flex flex-col items-center justify-start min-h-[75vh]"
