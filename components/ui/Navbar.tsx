@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Menu, X, Terminal } from "lucide-react";
 
 const NAV_LINKS = [
@@ -16,6 +18,13 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const router = useRouter();
+
+  // Prefetch document pages so Resume button navigates instantly
+  useEffect(() => {
+    router.prefetch("/resume");
+    router.prefetch("/cover-letter");
+  }, [router]);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
 
@@ -135,14 +144,14 @@ export default function Navbar() {
               <span>⌘</span>
               <span>K</span>
             </kbd>
-            <a
-              href="/resume.pdf"
-              download
+            <Link
+              href="/resume"
+              prefetch={true}
               className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-emerald-300 border border-emerald-500/30 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 transition-colors"
-              aria-label="Download Resume PDF"
+              aria-label="View Resume"
             >
-              Resume ↓
-            </a>
+              Resume →
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -205,14 +214,14 @@ export default function Navbar() {
               );
             })}
             <div className="mt-auto pt-4 border-t border-white/[0.06]">
-              <a
-                href="/resume.pdf"
-                download
+              <Link
+                href="/resume"
+                prefetch={true}
                 className="flex items-center justify-center gap-2 w-full px-4 py-3 text-sm font-semibold text-emerald-300 border border-emerald-500/30 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 transition-colors min-h-[44px]"
-                aria-label="Download Resume PDF"
+                aria-label="View Resume"
               >
-                Download Resume ↓
-              </a>
+                View Resume →
+              </Link>
             </div>
           </div>
         </div>
