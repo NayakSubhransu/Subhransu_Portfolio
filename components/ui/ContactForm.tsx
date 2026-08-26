@@ -1,368 +1,277 @@
 "use client";
 
 import { useState, useCallback, useRef } from "react";
-import { Send, Loader2, User, Mail, MessageSquare, Tag } from "lucide-react";
+import {
+  Send,
+  Loader2,
+  User,
+  Mail,
+  MessageSquare,
+  Tag,
+  CheckCircle2,
+  AlertCircle,
+} from "lucide-react";
 import { sendContactMessage } from "@/app/actions";
-import Toast, { type ToastMessage } from "@/components/ui/Toast";
 
-function generateId() {
-  return Math.random().toString(36).slice(2, 9);
+// ─── Field component ──────────────────────────────────────────────────────────
+function Field({
+  id,
+  label,
+  icon: Icon,
+  error,
+  children,
+}: {
+  id: string;
+  label: string;
+  icon: React.ElementType;
+  error?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex flex-col gap-1.5">
+      <label
+        htmlFor={id}
+        className="flex items-center gap-1.5 text-[11px] font-bold text-zinc-500 uppercase tracking-[0.14em]"
+      >
+        <Icon className="w-3 h-3" aria-hidden="true" />
+        {label}
+      </label>
+      {children}
+      {error && (
+        <p className="flex items-center gap-1 text-[11px] text-red-400 font-medium mt-0.5">
+          <AlertCircle className="w-3 h-3 flex-shrink-0" aria-hidden="true" />
+          {error}
+        </p>
+      )}
+    </div>
+  );
 }
 
-const inputClass = [
-  "w-full px-4 py-3 rounded-xl",
-  "bg-white/[0.03] border border-[--border-subtle]",
-  "text-[--text-primary] placeholder-[--text-faint]",
-  "text-sm font-medium",
-  "focus:outline-none focus:border-cyan-500/40 focus:bg-white/[0.05]",
-  "transition-all duration-200",
-  "disabled:opacity-50 disabled:cursor-not-allowed",
-  "min-h-[48px]",
-].join(" ");
+// ─── Input / Textarea shared classes ─────────────────────────────────────────
+const INPUT_BASE =
+  "w-full px-4 py-3 rounded-xl bg-white/[0.04] border text-zinc-200 placeholder-zinc-600 text-sm font-medium focus:outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px]";
 
-const labelClass =
-  "flex items-center gap-1.5 text-[10px] font-bold text-[--text-muted] uppercase tracking-[0.18em] font-mono";
+function inputClass(hasError: boolean) {
+  return `${INPUT_BASE} ${
+    hasError
+      ? "border-red-500/50 focus:border-red-500/70 focus:bg-red-500/[0.03]"
+      : "border-white/[0.08] focus:border-emerald-500/50 focus:bg-white/[0.06]"
+  }`;
+}
 
+// ─── Main Form ────────────────────────────────────────────────────────────────
 export default function ContactForm() {
-  const [isPending, setIsPending] = useState(false);
-  const [toasts, setToasts] = useState<ToastMessage[]>([]);
+  const [isPending, setIsPending]   = useState(false);
+  const [isSuccess, setIsSuccess]   = useState(false);
+  const [globalError, setGlobalError] = useState<string | null>(null);
+  const [successMsg, setSuccessMsg]   = useState<string>("");
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const formRef = useRef<HTMLFormElement>(null);
 
-  const removeToast = useCallback((id: string) => {
-    setToasts((prev) => prev.filter((t) => t.id !== id));
-  }, []);
+  // ── Client-side validation ────────────────────────────────────────────────
+  const validate = useCallback((data: FormData): Record<string, string> => {
+    const errors: Record<string, string> = {};
+    const name    = (data.get("name") as string)?.trim();
+    const email   = (data.get("email") as string)?.trim();
+    const subject = (data.get("subject") as string)?.trim();
+    const message = (data.get("message") as string)?.trim();
 
-  const addToast = useCallback(
-    (type: ToastMessage["type"], message: string) => {
-      const id = generateId();
-      setToasts((prev) => [...prev, { id, type, message }]);
-    },
-    [],
-  );
+    if (!name || name.length < 2)
+      errors.name = "Please enter your full name.";
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+      errors.email = "Please enter a valid email address.";
+    if (!subject || subject.length < 3)
+      errors.subject = "Please enter a subject (min 3 characters).";
+    if (!message || message.length < 10)
+      errors.message = "Message must be at least 10 characters.";
+
+    return errors;
+  }, []);
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       if (isPending) return;
-      setIsPending(true);
+
       const formData = new FormData(e.currentTarget);
+
+      // Client-side validation first
+      const errors = validate(formData);
+      if (Object.keys(errors).length > 0) {
+        setFieldErrors(errors);
+        return;
+      }
+      setFieldErrors({});
+      setGlobalError(null);
+      setIsPending(true);
+
       try {
         const result = await sendContactMessage(formData);
         if (result.success) {
-          addToast("success", result.message ?? "Message sent successfully!");
+          setIsSuccess(true);
+          setSuccessMsg(
+            result.message ??
+              "Message sent! I'll get back to you within 24 hours."
+          );
           formRef.current?.reset();
         } else {
-          addToast(
-            "error",
-            result.error ?? "Something went wrong. Please try again.",
+          setGlobalError(
+            result.error ?? "Something went wrong. Please try again."
           );
         }
       } catch {
-        addToast(
-          "error",
-          "Network error. Please check your connection and try again.",
+        setGlobalError(
+          "Network error. Please check your connection and try again."
         );
       } finally {
         setIsPending(false);
       }
     },
-    [isPending, addToast],
+    [isPending, validate]
   );
 
-  return (
-    <>
-      <form
-        ref={formRef}
-        onSubmit={handleSubmit}
-        noValidate
-        aria-label="Contact form"
-        className="flex flex-col gap-4"
-      >
-        {/* Name & Email — stacked on mobile, side-by-side on sm+ */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="flex flex-col gap-2">
-            <label htmlFor="contact-name" className={labelClass}>
-              <User className="w-3 h-3" aria-hidden="true" />
-              Name
-            </label>
-            <input
-              id="contact-name"
-              name="name"
-              type="text"
-              autoComplete="name"
-              required
-              minLength={2}
-              placeholder="Your full name"
-              disabled={isPending}
-              className={inputClass}
-              aria-required="true"
-            />
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <label htmlFor="contact-email" className={labelClass}>
-              <Mail className="w-3 h-3" aria-hidden="true" />
-              Email
-            </label>
-            <input
-              id="contact-email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              required
-              placeholder="you@example.com"
-              disabled={isPending}
-              className={inputClass}
-              aria-required="true"
-            />
-          </div>
+  // ── Success state ─────────────────────────────────────────────────────────
+  if (isSuccess) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-5 py-10 text-center">
+        <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/25">
+          <CheckCircle2 className="w-8 h-8 text-emerald-400" aria-hidden="true" />
         </div>
-
-        {/* Subject */}
-        <div className="flex flex-col gap-2">
-          <label htmlFor="contact-subject" className={labelClass}>
-            <Tag className="w-3 h-3" aria-hidden="true" />
-            Subject
-          </label>
-          <input
-            id="contact-subject"
-            name="subject"
-            type="text"
-            required
-            minLength={3}
-            placeholder="What's this about?"
-            disabled={isPending}
-            className={inputClass}
-            aria-required="true"
-          />
+        <div>
+          <h4 className="text-base font-bold text-zinc-100 mb-1">
+            Message Sent!
+          </h4>
+          <p className="text-sm text-zinc-400 leading-relaxed max-w-sm">
+            {successMsg}
+          </p>
         </div>
-
-        {/* Message */}
-        <div className="flex flex-col gap-2">
-          <label htmlFor="contact-message" className={labelClass}>
-            <MessageSquare className="w-3 h-3" aria-hidden="true" />
-            Message
-          </label>
-          <textarea
-            id="contact-message"
-            name="message"
-            required
-            minLength={10}
-            rows={5}
-            placeholder="Tell me about your project, opportunity, or just say hello..."
-            disabled={isPending}
-            className={[
-              "w-full px-4 py-3 rounded-xl",
-              "bg-white/[0.03] border border-[--border-subtle]",
-              "text-[--text-primary] placeholder-[--text-faint]",
-              "text-sm font-medium leading-relaxed",
-              "focus:outline-none focus:border-cyan-500/40 focus:bg-white/[0.05]",
-              "transition-all duration-200",
-              "disabled:opacity-50 disabled:cursor-not-allowed",
-              "resize-none",
-            ].join(" ")}
-            aria-required="true"
-          />
-        </div>
-
-        {/* Submit */}
         <button
-          type="submit"
-          disabled={isPending}
-          className="flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-zinc-900 font-bold text-sm transition-all duration-200 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-emerald-500 min-h-[48px]"
-          aria-label={isPending ? "Sending message..." : "Send message"}
+          type="button"
+          onClick={() => {
+            setIsSuccess(false);
+            setSuccessMsg("");
+            setGlobalError(null);
+          }}
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 text-sm font-semibold transition-all min-h-[44px]"
         >
-          {isPending ? (
-            <>
-              <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
-              Sending…
-            </>
-          ) : (
-            <>
-              <Send className="w-4 h-4" aria-hidden="true" />
-              Send Message
-            </>
-          )}
+          Send another message
         </button>
-      </form>
+      </div>
+    );
+  }
 
-      <Toast toasts={toasts} onRemove={removeToast} />
-    </>
+  // ── Form ──────────────────────────────────────────────────────────────────
+  return (
+    <form
+      ref={formRef}
+      onSubmit={handleSubmit}
+      noValidate
+      aria-label="Contact form"
+      className="flex flex-col gap-4"
+    >
+      {/* Name + Email row */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <Field id="contact-name" label="Name" icon={User} error={fieldErrors.name}>
+          <input
+            id="contact-name"
+            name="name"
+            type="text"
+            autoComplete="name"
+            placeholder="Your full name"
+            disabled={isPending}
+            className={inputClass(!!fieldErrors.name)}
+            aria-required="true"
+            aria-invalid={!!fieldErrors.name}
+            onChange={() =>
+              setFieldErrors((prev) => ({ ...prev, name: "" }))
+            }
+          />
+        </Field>
+
+        <Field id="contact-email" label="Email" icon={Mail} error={fieldErrors.email}>
+          <input
+            id="contact-email"
+            name="email"
+            type="email"
+            autoComplete="email"
+            placeholder="you@example.com"
+            disabled={isPending}
+            className={inputClass(!!fieldErrors.email)}
+            aria-required="true"
+            aria-invalid={!!fieldErrors.email}
+            onChange={() =>
+              setFieldErrors((prev) => ({ ...prev, email: "" }))
+            }
+          />
+        </Field>
+      </div>
+
+      {/* Subject */}
+      <Field id="contact-subject" label="Subject" icon={Tag} error={fieldErrors.subject}>
+        <input
+          id="contact-subject"
+          name="subject"
+          type="text"
+          placeholder="What's this about?"
+          disabled={isPending}
+          className={inputClass(!!fieldErrors.subject)}
+          aria-required="true"
+          aria-invalid={!!fieldErrors.subject}
+          onChange={() =>
+            setFieldErrors((prev) => ({ ...prev, subject: "" }))
+          }
+        />
+      </Field>
+
+      {/* Message */}
+      <Field id="contact-message" label="Message" icon={MessageSquare} error={fieldErrors.message}>
+        <textarea
+          id="contact-message"
+          name="message"
+          rows={5}
+          placeholder="Tell me about your project, opportunity, or just say hello..."
+          disabled={isPending}
+          className={`${inputClass(!!fieldErrors.message)} resize-none leading-relaxed`}
+          style={{ minHeight: "auto" }}
+          aria-required="true"
+          aria-invalid={!!fieldErrors.message}
+          onChange={() =>
+            setFieldErrors((prev) => ({ ...prev, message: "" }))
+          }
+        />
+      </Field>
+
+      {/* Global error banner */}
+      {globalError && (
+        <div
+          className="flex items-start gap-2.5 px-4 py-3 rounded-xl bg-red-500/8 border border-red-500/25 text-red-400 text-sm"
+          role="alert"
+          aria-live="assertive"
+        >
+          <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" aria-hidden="true" />
+          <span>{globalError}</span>
+        </div>
+      )}
+
+      {/* Submit */}
+      <button
+        type="submit"
+        disabled={isPending}
+        className="flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-zinc-900 font-bold text-sm transition-all duration-200 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 disabled:opacity-60 disabled:cursor-not-allowed disabled:pointer-events-none min-h-[48px]"
+        aria-label={isPending ? "Sending message…" : "Send message"}
+      >
+        {isPending ? (
+          <>
+            <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
+            Sending…
+          </>
+        ) : (
+          <>
+            <Send className="w-4 h-4" aria-hidden="true" />
+            Send Message
+          </>
+        )}
+      </button>
+    </form>
   );
 }
-
-// "use client";
-
-// import { useState, useCallback, useRef } from "react";
-// import { Send, Loader2, User, Mail, MessageSquare, Tag } from "lucide-react";
-// import { sendContactMessage } from "@/app/actions";
-// import Toast, { type ToastMessage } from "@/components/ui/Toast";
-
-// function generateId() {
-//   return Math.random().toString(36).slice(2, 9);
-// }
-
-// export default function ContactForm() {
-//   const [isPending, setIsPending] = useState(false);
-//   const [toasts, setToasts] = useState<ToastMessage[]>([]);
-//   const formRef = useRef<HTMLFormElement>(null);
-
-//   const removeToast = useCallback((id: string) => {
-//     setToasts((prev) => prev.filter((t) => t.id !== id));
-//   }, []);
-
-//   const addToast = useCallback(
-//     (type: ToastMessage["type"], message: string) => {
-//       const id = generateId();
-//       setToasts((prev) => [...prev, { id, type, message }]);
-//     },
-//     []
-//   );
-
-//   const handleSubmit = useCallback(
-//     async (e: React.FormEvent<HTMLFormElement>) => {
-//       e.preventDefault();
-//       if (isPending) return;
-//       setIsPending(true);
-//       const formData = new FormData(e.currentTarget);
-//       try {
-//         const result = await sendContactMessage(formData);
-//         if (result.success) {
-//           addToast("success", result.message ?? "Message sent successfully!");
-//           formRef.current?.reset();
-//         } else {
-//           addToast("error", result.error ?? "Something went wrong. Please try again.");
-//         }
-//       } catch {
-//         addToast("error", "Network error. Please check your connection and try again.");
-//       } finally {
-//         setIsPending(false);
-//       }
-//     },
-//     [isPending, addToast]
-//   );
-
-//   return (
-//     <>
-//       <form
-//         ref={formRef}
-//         onSubmit={handleSubmit}
-//         noValidate
-//         aria-label="Contact form"
-//         className="flex flex-col gap-4"
-//       >
-//         {/* Name & Email — stacked on mobile, side-by-side on sm+ */}
-//         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-//           <div className="flex flex-col gap-1.5">
-//             <label
-//               htmlFor="contact-name"
-//               className="flex items-center gap-1.5 text-xs font-semibold text-zinc-400 uppercase tracking-wider"
-//             >
-//               <User className="w-3 h-3" aria-hidden="true" />
-//               Name
-//             </label>
-//             <input
-//               id="contact-name"
-//               name="name"
-//               type="text"
-//               autoComplete="name"
-//               required
-//               minLength={2}
-//               placeholder="Your full name"
-//               disabled={isPending}
-//               className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-zinc-200 placeholder-zinc-600 text-sm font-medium focus:outline-none focus:border-emerald-500/50 focus:bg-white/[0.06] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px]"
-//               aria-required="true"
-//             />
-//           </div>
-
-//           <div className="flex flex-col gap-1.5">
-//             <label
-//               htmlFor="contact-email"
-//               className="flex items-center gap-1.5 text-xs font-semibold text-zinc-400 uppercase tracking-wider"
-//             >
-//               <Mail className="w-3 h-3" aria-hidden="true" />
-//               Email
-//             </label>
-//             <input
-//               id="contact-email"
-//               name="email"
-//               type="email"
-//               autoComplete="email"
-//               required
-//               placeholder="you@example.com"
-//               disabled={isPending}
-//               className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-zinc-200 placeholder-zinc-600 text-sm font-medium focus:outline-none focus:border-emerald-500/50 focus:bg-white/[0.06] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px]"
-//               aria-required="true"
-//             />
-//           </div>
-//         </div>
-
-//         {/* Subject */}
-//         <div className="flex flex-col gap-1.5">
-//           <label
-//             htmlFor="contact-subject"
-//             className="flex items-center gap-1.5 text-xs font-semibold text-zinc-400 uppercase tracking-wider"
-//           >
-//             <Tag className="w-3 h-3" aria-hidden="true" />
-//             Subject
-//           </label>
-//           <input
-//             id="contact-subject"
-//             name="subject"
-//             type="text"
-//             required
-//             minLength={3}
-//             placeholder="What's this about?"
-//             disabled={isPending}
-//             className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-zinc-200 placeholder-zinc-600 text-sm font-medium focus:outline-none focus:border-emerald-500/50 focus:bg-white/[0.06] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px]"
-//             aria-required="true"
-//           />
-//         </div>
-
-//         {/* Message */}
-//         <div className="flex flex-col gap-1.5">
-//           <label
-//             htmlFor="contact-message"
-//             className="flex items-center gap-1.5 text-xs font-semibold text-zinc-400 uppercase tracking-wider"
-//           >
-//             <MessageSquare className="w-3 h-3" aria-hidden="true" />
-//             Message
-//           </label>
-//           <textarea
-//             id="contact-message"
-//             name="message"
-//             required
-//             minLength={10}
-//             rows={5}
-//             placeholder="Tell me about your project, opportunity, or just say hello..."
-//             disabled={isPending}
-//             className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-zinc-200 placeholder-zinc-600 text-sm font-medium focus:outline-none focus:border-emerald-500/50 focus:bg-white/[0.06] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed resize-none leading-relaxed"
-//             aria-required="true"
-//           />
-//         </div>
-
-//   {/* Submit */}
-//   <button
-//     type="submit"
-//     disabled={isPending}
-//     className="flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-zinc-900 font-bold text-sm transition-all duration-200 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-emerald-500 min-h-[48px]"
-//     aria-label={isPending ? "Sending message..." : "Send message"}
-//   >
-//     {isPending ? (
-//       <>
-//         <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
-//         Sending…
-//       </>
-//     ) : (
-//       <>
-//         <Send className="w-4 h-4" aria-hidden="true" />
-//         Send Message
-//       </>
-//     )}
-//   </button>
-// </form>
-
-//       <Toast toasts={toasts} onRemove={removeToast} />
-//     </>
-//   );
-// }
