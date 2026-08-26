@@ -132,7 +132,7 @@ export default function DocumentViewer({
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [numPages, setNumPages] = useState<number>(0);
-  const [scale, setScale] = useState<number>(1.2);
+  const [scale, setScale] = useState<number>(0.8);
   const [renderTrigger, setRenderTrigger] = useState<number>(0);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -241,11 +241,11 @@ export default function DocumentViewer({
   }, [numPages, scale]);
 
   const handleZoomIn = useCallback(() => {
-    setScale((prev) => Math.min(prev + 0.15, 2.0));
+    setScale((prev) => Math.min(prev + 0.10, 2.0));
   }, []);
 
   const handleZoomOut = useCallback(() => {
-    setScale((prev) => Math.max(prev - 0.15, 0.7));
+    setScale((prev) => Math.max(prev - 0.10, 0.7));
   }, []);
 
   const handleFitWidth = useCallback(() => {
