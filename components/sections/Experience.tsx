@@ -65,7 +65,7 @@ function getCardColors(index: number) {
 // ─── Domain meta per job id ───────────────────────────────────────────────────
 const JOB_META: Record<string, { icon: React.ElementType; domain: string }> = {
   healthyday: { icon: Database, domain: "Data Engineering · Analytics" },
-  hanyaa:     { icon: Cpu,      domain: "AI / ML Engineering" },
+  hanyaa:     { icon: Cpu,      domain: "AI Engineering" },
 };
 
 // ─── Bold metric parser - accent-colored per card ────────────────────────────
