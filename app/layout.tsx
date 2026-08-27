@@ -12,6 +12,16 @@ export const metadata: Metadata = {
   },
   description:
     "Software Developer & AI Engineer specializing in High-Throughput Distributed Systems, Scalable Data Pipelines, and Agentic AI Architectures. IIT Bhubaneswar. LeetCode Peak 1934 (Top 4%).",
+  // ── Favicon & App Icons ──────────────────────────────────────────────────
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon.png", type: "image/png", sizes: "32x32" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
   keywords: [
     "Software Engineer",
     "AI Developer",
