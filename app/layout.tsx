@@ -166,14 +166,32 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {/* Preconnect to external resources */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+        <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
         <link rel="dns-prefetch" href="https://github.com" />
+        <link
+          rel="preload"
+          as="script"
+          href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"
+          crossOrigin="anonymous" />
+        <link
+          rel="preload"
+          as="fetch"
+          href="/resume.pdf"
+          crossOrigin="anonymous"
+          // @ts-expect-error
+          fetchpriority="low" />
+        <link
+          rel="preload"
+          as="fetch"
+          href="/cover-letter.pdf"
+          crossOrigin="anonymous"
+          // @ts-expect-error
+          fetchpriority="low" />
       </head>
       <body
         className="bg-[#09090b] text-zinc-100 antialiased font-sans selection:bg-emerald-500/30 selection:text-emerald-200"
-        suppressHydrationWarning
-      >
+        suppressHydrationWarning >
         {children}
       </body>
     </html>

@@ -3,8 +3,12 @@ import DocumentViewer from "@/components/ui/DocumentViewer";
 
 export const metadata: Metadata = {
   title: "Resume",
-  description:
-    "View and download the resume of Subhransu Priyaranjan Nayak — Software Developer & AI Engineer.",
+  description: "View and download the resume of Subhransu Priyaranjan Nayak.",
+  openGraph: {
+    title: "Resume — Subhransu Priyaranjan Nayak",
+    description: "Software Developer & AI Engineer · IIT Bhubaneswar",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
+  },
 };
 
 export default function ResumePage() {

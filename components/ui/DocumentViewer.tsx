@@ -27,7 +27,6 @@ interface DocumentViewerProps {
   accentColor: AccentColor;
 }
 
-// ── Per-accent design tokens ─────────────────────────────────────────────────
 const ACCENT = {
   emerald: {
     eyebrow: "text-emerald-400",
@@ -57,7 +56,6 @@ const ACCENT = {
   },
 } as const;
 
-// ── PDF.js Types (Replaces `any` for strict TypeScript) ──────────────────────
 interface PDFViewport {
   width: number;
   height: number;
@@ -79,6 +77,7 @@ interface PDFPageProxy {
 interface PDFDocumentProxy {
   numPages: number;
   getPage: (pageNumber: number) => Promise<PDFPageProxy>;
+  destroy?: () => void;
 }
 
 interface PDFLoadingTask {
@@ -98,20 +97,51 @@ declare global {
   }
 }
 
-async function loadPdfJs(): Promise<PDFGlobalLib | null> {
-  if (typeof window === "undefined") return null;
-  if (window.pdfjsLib) return window.pdfjsLib;
+const PDFJS_VERSION = "3.11.174";
+const PDFJS_SCRIPT_URL = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDFJS_VERSION}/pdf.min.js`;
+const PDFJS_WORKER_URL = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDFJS_VERSION}/pdf.worker.min.js`;
 
-  return new Promise((resolve, reject) => {
+let pdfjsLoadingPromise: Promise<PDFGlobalLib> | null = null;
+
+function loadPdfJs(): Promise<PDFGlobalLib> {
+  if (typeof window === "undefined") {
+    return Promise.reject(new Error("Window not defined"));
+  }
+  if (window.pdfjsLib) {
+    return Promise.resolve(window.pdfjsLib);
+  }
+  if (pdfjsLoadingPromise) {
+    return pdfjsLoadingPromise;
+  }
+
+  pdfjsLoadingPromise = new Promise((resolve, reject) => {
+    const existingScript = document.querySelector<HTMLScriptElement>(
+      `script[src="${PDFJS_SCRIPT_URL}"]`,
+    );
+
+    if (existingScript) {
+      existingScript.addEventListener("load", () => {
+        if (window.pdfjsLib) {
+          window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_WORKER_URL;
+          resolve(window.pdfjsLib);
+        } else {
+          reject(new Error("PDF.js library missing on window"));
+        }
+      });
+      existingScript.addEventListener("error", () =>
+        reject(new Error("Failed to load PDF engine")),
+      );
+      return;
+    }
+
     const script = document.createElement("script");
-    script.src =
-      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
+    script.src = PDFJS_SCRIPT_URL;
+    script.async = true;
+
     script.onload = () => {
-      const lib = window.pdfjsLib;
-      if (lib) {
-        lib.GlobalWorkerOptions.workerSrc =
-          "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-        resolve(lib);
+      if (window.pdfjsLib) {
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_WORKER_URL;
+        resolve(window.pdfjsLib);
       } else {
         reject(new Error("PDF.js failed to initialize"));
       }
@@ -119,6 +149,8 @@ async function loadPdfJs(): Promise<PDFGlobalLib | null> {
     script.onerror = () => reject(new Error("Failed to load PDF engine"));
     document.head.appendChild(script);
   });
+
+  return pdfjsLoadingPromise;
 }
 
 export default function DocumentViewer({
@@ -132,13 +164,15 @@ export default function DocumentViewer({
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [numPages, setNumPages] = useState<number>(0);
-  const [scale, setScale] = useState<number>(0.8);
+  const [scale, setScale] = useState<number>(0.85);
   const [renderTrigger, setRenderTrigger] = useState<number>(0);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const pdfDocRef = useRef<PDFDocumentProxy | null>(null);
   const activeTasksRef = useRef<PDFRenderTask[]>([]);
-  const a = ACCENT[accentColor];
+  const firstPageWidthRef = useRef<number>(600);
+
+  const a = ACCENT[accentColor] || ACCENT.indigo;
   const targetHome = backHref || "/";
 
   // 1. Fetch & Initialize PDF Document
@@ -150,7 +184,7 @@ export default function DocumentViewer({
     async function initPdf() {
       try {
         const pdfjs = await loadPdfJs();
-        if (!pdfjs || isCancelled) return;
+        if (isCancelled) return;
 
         const loadingTask = pdfjs.getDocument(filePath);
         const doc = await loadingTask.promise;
@@ -158,6 +192,11 @@ export default function DocumentViewer({
 
         pdfDocRef.current = doc;
         setNumPages(doc.numPages);
+
+        // Store reference unscaled width for fit-width calculation
+        const firstPage = await doc.getPage(1);
+        firstPageWidthRef.current = firstPage.getViewport({ scale: 1.0 }).width;
+
         setIsLoading(false);
       } catch (err: unknown) {
         if (!isCancelled) {
@@ -172,6 +211,9 @@ export default function DocumentViewer({
 
     return () => {
       isCancelled = true;
+      if (pdfDocRef.current?.destroy) {
+        pdfDocRef.current.destroy();
+      }
     };
   }, [filePath, renderTrigger]);
 
@@ -179,6 +221,9 @@ export default function DocumentViewer({
   useEffect(() => {
     if (!pdfDocRef.current || numPages === 0 || !containerRef.current) return;
 
+    let isSubscribed = true;
+
+    // Cancel all running render tasks
     activeTasksRef.current.forEach((task) => {
       try {
         task.cancel();
@@ -190,17 +235,22 @@ export default function DocumentViewer({
     container.innerHTML = "";
 
     async function renderPages() {
-      if (!pdfDocRef.current) return;
+      const doc = pdfDocRef.current;
+      if (!doc) return;
 
       for (let pageNum = 1; pageNum <= numPages; pageNum++) {
+        if (!isSubscribed) break;
+
         try {
-          const page = await pdfDocRef.current.getPage(pageNum);
+          const page = await doc.getPage(pageNum);
+          if (!isSubscribed) break;
+
           const viewport = page.getViewport({ scale });
-          const dpr = window.devicePixelRatio || 1;
+          const dpr = Math.max(window.devicePixelRatio || 1, 1);
 
           const pageWrapper = document.createElement("div");
           pageWrapper.className =
-            "relative mx-auto rounded-lg overflow-hidden shadow-2xl shadow-black/80 border border-white/[0.08] mb-6 bg-white";
+            "relative mx-auto rounded-lg overflow-hidden shadow-2xl shadow-black/80 border border-white/[0.08] mb-6 bg-white shrink-0";
 
           const canvas = document.createElement("canvas");
           canvas.width = Math.floor(viewport.width * dpr);
@@ -216,12 +266,11 @@ export default function DocumentViewer({
           pageWrapper.appendChild(canvas);
           container.appendChild(pageWrapper);
 
-          const renderContext = {
+          const renderTask = page.render({
             canvasContext: ctx,
             viewport: viewport,
-          };
+          });
 
-          const renderTask = page.render(renderContext);
           activeTasksRef.current.push(renderTask);
           await renderTask.promise;
         } catch (err: unknown) {
@@ -229,29 +278,42 @@ export default function DocumentViewer({
             err &&
             typeof err === "object" &&
             "name" in err &&
-            (err as { name: string }).name !== "RenderingCancelledException"
+            (err as { name: string }).name === "RenderingCancelledException"
           ) {
-            console.error("Page render error:", err);
+            // Task cancellation is expected during re-renders
+            continue;
           }
+          console.error("Page render error:", err);
         }
       }
     }
 
     renderPages();
+
+    return () => {
+      isSubscribed = false;
+      activeTasksRef.current.forEach((task) => {
+        try {
+          task.cancel();
+        } catch {}
+      });
+      activeTasksRef.current = [];
+    };
   }, [numPages, scale]);
 
   const handleZoomIn = useCallback(() => {
-    setScale((prev) => Math.min(prev + 0.10, 2.0));
+    setScale((prev) => Math.min(Number((prev + 0.1).toFixed(2)), 2.0));
   }, []);
 
   const handleZoomOut = useCallback(() => {
-    setScale((prev) => Math.max(prev - 0.10, 0.7));
+    setScale((prev) => Math.max(Number((prev - 0.1).toFixed(2)), 0.5));
   }, []);
 
   const handleFitWidth = useCallback(() => {
     if (!containerRef.current) return;
     const containerWidth = containerRef.current.clientWidth - 48;
-    setScale(Math.min(Math.max(containerWidth / 750, 0.75), 1.5));
+    const targetScale = containerWidth / firstPageWidthRef.current;
+    setScale(Math.min(Math.max(Number(targetScale.toFixed(2)), 0.5), 1.6));
   }, []);
 
   const handleRetry = useCallback(() => {
@@ -365,7 +427,7 @@ export default function DocumentViewer({
               >
                 <ZoomOut className="w-3.5 h-3.5" />
               </button>
-              <span className="text-[11px] font-mono font-semibold text-zinc-400 px-1 select-none">
+              <span className="text-[11px] font-mono font-semibold text-zinc-400 px-1 select-none min-w-[40px] text-center">
                 {Math.round(scale * 100)}%
               </span>
               <button
@@ -457,7 +519,6 @@ export default function DocumentViewer({
     </div>
   );
 }
-
 // "use client";
 
 // import { useState, useCallback } from "react";
