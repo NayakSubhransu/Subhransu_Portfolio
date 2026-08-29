@@ -15,7 +15,7 @@ import {
 // ─── Config ──────────────────────────────────────────────────────────────────
 const DOCK_LINKS = [
   { href: "#home", label: "Home", Icon: Home },
-  { href: "#achievements", label: "CP", Icon: Trophy },
+  { href: "#achievements", label: "Coding", Icon: Trophy },
   { href: "#experience", label: "Work", Icon: Briefcase },
   { href: "#projects", label: "Projects", Icon: FolderGit2 },
 
