@@ -40,17 +40,17 @@ import { useEffect, useRef, useCallback } from "react";
 const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
 // Density & Connectivity
-export const NODE_COUNT         = isMobile ? 32 : 68;    // Clean density; prevents CPU lag & visual clutter
-export const CONNECTION_RADIUS  = isMobile ? 95 : 125;   // px — max edge distance for crisp, localized clusters
+export const NODE_COUNT         = isMobile ? 32 : 100;    // Clean density; prevents CPU lag & visual clutter
+export const CONNECTION_RADIUS  = isMobile ? 95 : 145;   // px — max edge distance for crisp, localized clusters
 export const NODE_RADIUS_MIN    = 1.0;                   // px — sharp sub-pixel pinpoint
-export const NODE_RADIUS_MAX    = 2.2;                   // px — refined data node (avoids bulky circles)
+export const NODE_RADIUS_MAX    = 3.0;                   // px — refined data node (avoids bulky circles)
 
 // Motion & Fluid Dynamics
 export const BASE_SPEED         = 0.26;                  // px/frame — calm, cinematic ambient drift
 export const FRICTION           = 0.942;                 // Velocity damping (organic viscosity, no endless sliding)
 
 // Mouse & Touch Interaction
-export const MOUSE_REPEL_RADIUS = isMobile ? 90 : 145;   // px — focused interactive aura around cursor
+export const MOUSE_REPEL_RADIUS = isMobile ? 90 : 205;   // px — focused interactive aura around cursor
 export const REPEL_STRENGTH     = 13500;                 // Smooth displacement without throwing nodes off-screen
 export const ATTRACT_STRENGTH   = 0.034;                 // Gravitational pull force on click/hold
 
