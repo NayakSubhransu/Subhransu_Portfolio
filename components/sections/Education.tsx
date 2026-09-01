@@ -431,7 +431,7 @@ export default function EducationSection() {
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-zinc-100 tracking-tight">
             Education & Certifications
           </h2>
-          <p className="mt-2 text-zinc-500 max-w-xl text-sm sm:text-base">
+          <p className="mt-2 text-zinc-400 max-w-xl text-sm sm:text-base">
             Institutional foundation from IIT Bhubaneswar, backed by verified
             technical certifications.
           </p>
@@ -472,7 +472,7 @@ export default function EducationSection() {
               className="h-px flex-1 bg-gradient-to-r from-transparent to-zinc-800"
               aria-hidden="true"
             />
-            <span className="text-[11px] font-mono font-semibold uppercase tracking-[0.2em] text-zinc-500 whitespace-nowrap">
+            <span className="text-[13px] font-mono font-semibold uppercase tracking-[0.2em] text-zinc-200 whitespace-nowrap">
               Verified Certifications & Training
             </span>
             <span

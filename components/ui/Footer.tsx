@@ -52,18 +52,18 @@ export default function Footer() {
             {/* Wordmark */}
             <div className="flex items-center gap-2">
               <span
-                className="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20"
+                className="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-700/10 border border-emerald-500/20"
                 aria-hidden="true"
               >
-                <Terminal className="w-4 h-4 text-emerald-400" />
+                <Terminal className="w-4 h-4 text-emerald-500" />
               </span>
-              <span className="font-mono text-sm font-semibold text-zinc-300">
-                subhransu<span className="text-emerald-500">.</span>dev
+              <span className="font-mono text-lg font-semibold text-zinc-300">
+                subhransu<span className="text-emerald-700">.</span>dev
               </span>
             </div>
 
             {/* Tagline */}
-            <p className="text-sm text-zinc-500 leading-relaxed max-w-xs">
+            <p className="text-sm text-zinc-400 leading-relaxed max-w-xs">
               Software Developer & AI Engineer building distributed systems,
               real-time platforms, and agentic AI pipelines.
             </p>
@@ -102,7 +102,7 @@ export default function Footer() {
 
           {/* ── Middle: Work nav column ── */}
           <div className="flex flex-col gap-3">
-            <p className="text-[15px] font-mono font-black uppercase tracking-[0.2em] text-zinc-600 mb-1">
+            <p className="text-[15px] font-mono font-black uppercase tracking-[0.2em] text-white-100 mb-1">
               Work
             </p>
             <nav aria-label="Footer work navigation">
@@ -111,10 +111,10 @@ export default function Footer() {
                   <li key={href}>
                     <a
                       href={href}
-                      className="group flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-200 transition-colors duration-200"
+                      className="group flex items-center gap-1.5 text-sm text-zinc-400 hover:text-zinc-200 transition-colors duration-200"
                     >
                       <span
-                        className="w-1 h-1 rounded-full bg-zinc-00 group-hover:bg-emerald-500 transition-colors duration-200 flex-shrink-0"
+                        className="w-1 h-1 rounded-full bg-zinc-00 group-hover:bg-emerald-700 transition-colors duration-200 flex-shrink-0"
                         aria-hidden="true"
                       />
                       {label}
@@ -142,7 +142,7 @@ export default function Footer() {
         <div className="py-5 flex flex-col items-center justify-center gap-3">
 
           {/* Copyright */}
-          <p className="text-xs text-zinc-600 text-center font-mono">
+          <p className="text-base text-zinc-200 text-center font-mono">
             © {currentYear} Subhransu Priyaranjan Nayak
           </p>
 
@@ -153,25 +153,25 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub profile"
-              className="flex items-center justify-center w-8 h-8 rounded-lg text-zinc-600 hover:text-zinc-200 hover:bg-white/[0.05] transition-all duration-200"
+              className="flex items-center justify-center w-8 h-8 rounded-lg text-zinc-300 hover:text-zinc-200 hover:bg-white/[0.05] transition-all duration-200"
             >
-              <Github className="w-3.5 h-3.5" aria-hidden="true" />
+              <Github className="w-4 h-4" aria-hidden="true" />
             </a>
             <a
               href={contactInfo.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn profile"
-              className="flex items-center justify-center w-8 h-8 rounded-lg text-zinc-600 hover:text-blue-400 hover:bg-blue-500/[0.06] transition-all duration-200"
+              className="flex items-center justify-center w-8 h-8 rounded-lg text-zinc-300 hover:text-blue-400 hover:bg-blue-500/[0.06] transition-all duration-200"
             >
-              <Linkedin className="w-3.5 h-3.5" aria-hidden="true" />
+              <Linkedin className="w-4 h-4" aria-hidden="true" />
             </a>
             <a
               href={`mailto:${contactInfo.email}`}
               aria-label="Send email"
-              className="flex items-center justify-center w-8 h-8 rounded-lg text-zinc-600 hover:text-emerald-400 hover:bg-emerald-500/[0.06] transition-all duration-200"
+              className="flex items-center justify-center w-8 h-8 rounded-lg text-zinc-300 hover:text-emerald-400 hover:bg-emerald-500/[0.06] transition-all duration-200"
             >
-              <Mail className="w-3.5 h-3.5" aria-hidden="true" />
+              <Mail className="w-4 h-4" aria-hidden="true" />
             </a>
           </div>
         </div>

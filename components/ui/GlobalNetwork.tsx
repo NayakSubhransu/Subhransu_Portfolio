@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useCallback } from "react";
 
-const EMERALD = { r: 16,  g: 185, b: 129 };
-const INDIGO  = { r: 99,  g: 102, b: 241 };
-const CYAN    = { r: 34,  g: 211, b: 238 };
+const EMERALD = { r: 120,  g: 185, b: 129 };
+const INDIGO  = { r: 179,  g: 102, b: 241 };
+const CYAN    = { r: 250,  g: 211, b: 238 };
 
 const isMob = () => typeof window !== "undefined" && window.innerWidth < 768;
 
@@ -74,7 +74,7 @@ export default function GlobalNetwork() {
     const COUNT   = mobile ? 50  : 130;
     const CONN_R  = mobile ? 130 : 165;
     const REPEL_R = mobile ? 100 : 200;
-    const MAX_SPD = mobile ? .8 : 2.2;
+    const MAX_SPD = mobile ? .8 : 2.0;
     // No friction clamp — nodes drift freely, just soft-bounded
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
