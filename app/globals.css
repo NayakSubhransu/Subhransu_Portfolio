@@ -91,11 +91,17 @@ body > canvas { z-index: 0; }          /* GlobalNetwork fixed canvas          */
 /* main must NOT have position+z-index together — creates a stacking context
    that traps fixed children (BottomDock, Navbar) relative to main, not viewport */
 main          { position: static; }
-header, nav, footer { position: relative; z-index: 2; }
+header, nav:not(.fixed):not([data-dock]), footer { 
+  position: relative; 
+  z-index: 2; 
+}
 
 /* Navbar and dock always on top */
 [data-navbar]  { z-index: 50 !important; }
-[data-dock]    { z-index: 50 !important; }
+[data-dock] { 
+  position: fixed !important;
+  z-index: 50 !important; 
+}
 
 .glass {
   position: relative;
