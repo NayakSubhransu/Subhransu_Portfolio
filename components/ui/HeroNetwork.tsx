@@ -26,15 +26,33 @@
 import { useEffect, useRef, useCallback } from "react";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
-const NODE_COUNT         = 100;
-const CONNECTION_RADIUS  = 140;   // px — max distance to draw an edge
-const MOUSE_REPEL_RADIUS = 200;   // px — force field radius
-const REPEL_STRENGTH     = 6000;  // higher = stronger push
-const ATTRACT_STRENGTH   = 0.018; // click-hold pull toward cursor
-const FRICTION           = 0.985; // velocity damping per frame
-const BASE_SPEED         = 0.48;  // px/frame max random velocity
-const NODE_RADIUS_MIN    = 1;
-const NODE_RADIUS_MAX    = 3;
+// const NODE_COUNT         = 100;
+// const CONNECTION_RADIUS  = 140;   // px — max distance to draw an edge
+// const MOUSE_REPEL_RADIUS = 200;   // px — force field radius
+// const REPEL_STRENGTH     = 20000;  // higher = stronger push
+// const ATTRACT_STRENGTH   = 0.018; // click-hold pull toward cursor
+// const FRICTION           = 0.985; // velocity damping per frame
+// const BASE_SPEED         = 0.48;  // px/frame max random velocity
+// const NODE_RADIUS_MIN    = 1;
+// const NODE_RADIUS_MAX    = 3;
+
+// ─── Production-Tuned 3D Network Constants ─────────────────────────────────────
+const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
+// Density & Connectivity
+export const NODE_COUNT         = isMobile ? 32 : 68;    // Clean density; prevents CPU lag & visual clutter
+export const CONNECTION_RADIUS  = isMobile ? 95 : 125;   // px — max edge distance for crisp, localized clusters
+export const NODE_RADIUS_MIN    = 1.0;                   // px — sharp sub-pixel pinpoint
+export const NODE_RADIUS_MAX    = 2.2;                   // px — refined data node (avoids bulky circles)
+
+// Motion & Fluid Dynamics
+export const BASE_SPEED         = 0.26;                  // px/frame — calm, cinematic ambient drift
+export const FRICTION           = 0.942;                 // Velocity damping (organic viscosity, no endless sliding)
+
+// Mouse & Touch Interaction
+export const MOUSE_REPEL_RADIUS = isMobile ? 90 : 145;   // px — focused interactive aura around cursor
+export const REPEL_STRENGTH     = 13500;                 // Smooth displacement without throwing nodes off-screen
+export const ATTRACT_STRENGTH   = 0.034;                 // Gravitational pull force on click/hold
 
 // Emerald and indigo — matching the portfolio palette exactly
 const EMERALD = { r: 60,  g: 185, b: 129 }; // #10b981
