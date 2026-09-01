@@ -1,3 +1,4 @@
+
 "use client";
 
 /**
@@ -18,7 +19,7 @@
  *  - Clean up all listeners on unmount
  */
 
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef } from "react";
 
 // ─── Utility: lerp ───────────────────────────────────────────────────────────
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -28,8 +29,12 @@ const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 // data-depth="0.3" = slow (far away), data-depth="0.8" = fast (close up).
 function useParallaxCursor() {
   useEffect(() => {
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isTouch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const isTouch = window.matchMedia(
+      "(hover: none) and (pointer: coarse)",
+    ).matches;
     if (prefersReduced || isTouch) return;
 
     const elements = document.querySelectorAll<HTMLElement>("[data-depth]");
@@ -37,8 +42,8 @@ function useParallaxCursor() {
 
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
-    let currentX: number[] = Array.from(elements).map(() => 0);
-    let currentY: number[] = Array.from(elements).map(() => 0);
+    const currentX: number[] = Array.from(elements).map(() => 0);
+    const currentY: number[] = Array.from(elements).map(() => 0);
     let rafId: number;
 
     const onMouseMove = (e: MouseEvent) => {
@@ -78,8 +83,12 @@ function useParallaxCursor() {
 // data-tilt-glare="true" adds a moving light reflection.
 function useCardTilt() {
   useEffect(() => {
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isTouch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const isTouch = window.matchMedia(
+      "(hover: none) and (pointer: coarse)",
+    ).matches;
     if (prefersReduced || isTouch) return;
 
     const cards = document.querySelectorAll<HTMLElement>("[data-tilt]");
@@ -131,7 +140,11 @@ function useCardTilt() {
           glare.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(255,255,255,0.10), transparent 65%)`;
         }
 
-        if (isHovered || Math.abs(currentRotX) > 0.01 || Math.abs(currentRotY) > 0.01) {
+        if (
+          isHovered ||
+          Math.abs(currentRotX) > 0.01 ||
+          Math.abs(currentRotY) > 0.01
+        ) {
           rafId = requestAnimationFrame(animate);
         }
       };
@@ -189,8 +202,12 @@ function useCardTilt() {
 // data-magnetic-strength="0.4" controls attraction (0–1, default 0.35).
 function useMagneticButtons() {
   useEffect(() => {
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isTouch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const isTouch = window.matchMedia(
+      "(hover: none) and (pointer: coarse)",
+    ).matches;
     if (prefersReduced || isTouch) return;
 
     const buttons = document.querySelectorAll<HTMLElement>("[data-magnetic]");
@@ -271,8 +288,12 @@ function useSpotlight() {
   const spotRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isTouch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const isTouch = window.matchMedia(
+      "(hover: none) and (pointer: coarse)",
+    ).matches;
     if (prefersReduced || isTouch) return;
 
     const spot = spotRef.current;
@@ -315,8 +336,12 @@ function FloatingParticles() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isTouch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const isTouch = window.matchMedia(
+      "(hover: none) and (pointer: coarse)",
+    ).matches;
     if (prefersReduced || isTouch) return;
 
     const canvas = canvasRef.current;
@@ -328,31 +353,40 @@ function FloatingParticles() {
     let w = window.innerWidth;
     let h = window.innerHeight;
 
-    canvas.width  = w;
+    canvas.width = w;
     canvas.height = h;
 
     // Particle definition — varying depth (z) creates parallax feel
     type Particle = {
-      x: number; y: number; z: number;
-      vx: number; vy: number;
-      size: number; alpha: number; hue: number;
-      pulse: number; pulseSpeed: number;
+      x: number;
+      y: number;
+      z: number;
+      vx: number;
+      vy: number;
+      size: number;
+      alpha: number;
+      hue: number;
+      pulse: number;
+      pulseSpeed: number;
     };
 
     const PARTICLE_COUNT = 22;
 
-    const particles: Particle[] = Array.from({ length: PARTICLE_COUNT }, () => ({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      z: Math.random(),             // 0 = far, 1 = close
-      vx: (Math.random() - 0.5) * 0.18,
-      vy: -(Math.random() * 0.25 + 0.08), // drift upward
-      size: Math.random() * 1.8 + 0.4,
-      alpha: Math.random() * 0.35 + 0.08,
-      hue: Math.random() > 0.65 ? 160 : 240, // emerald or indigo
-      pulse: Math.random() * Math.PI * 2,
-      pulseSpeed: Math.random() * 0.012 + 0.006,
-    }));
+    const particles: Particle[] = Array.from(
+      { length: PARTICLE_COUNT },
+      () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        z: Math.random(), // 0 = far, 1 = close
+        vx: (Math.random() - 0.5) * 0.18,
+        vy: -(Math.random() * 0.25 + 0.08), // drift upward
+        size: Math.random() * 1.8 + 0.4,
+        alpha: Math.random() * 0.35 + 0.08,
+        hue: Math.random() > 0.65 ? 160 : 240, // emerald or indigo
+        pulse: Math.random() * Math.PI * 2,
+        pulseSpeed: Math.random() * 0.012 + 0.006,
+      }),
+    );
 
     const draw = () => {
       ctx.clearRect(0, 0, w, h);
@@ -364,7 +398,14 @@ function FloatingParticles() {
         const displayAlpha = p.alpha * (0.4 + p.z * 0.6) * pulseFactor;
 
         // Draw glow
-        const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, displaySize * 4);
+        const grd = ctx.createRadialGradient(
+          p.x,
+          p.y,
+          0,
+          p.x,
+          p.y,
+          displaySize * 4,
+        );
         grd.addColorStop(0, `hsla(${p.hue}, 80%, 65%, ${displayAlpha})`);
         grd.addColorStop(1, `hsla(${p.hue}, 80%, 65%, 0)`);
         ctx.beginPath();
@@ -383,9 +424,16 @@ function FloatingParticles() {
         p.y += p.vy * (0.4 + p.z * 0.6);
 
         // Wrap around edges
-        if (p.y < -10) { p.y = h + 10; p.x = Math.random() * w; }
-        if (p.x < -10) { p.x = w + 10; }
-        if (p.x > w + 10) { p.x = -10; }
+        if (p.y < -10) {
+          p.y = h + 10;
+          p.x = Math.random() * w;
+        }
+        if (p.x < -10) {
+          p.x = w + 10;
+        }
+        if (p.x > w + 10) {
+          p.x = -10;
+        }
       });
 
       rafId = requestAnimationFrame(draw);
@@ -394,7 +442,7 @@ function FloatingParticles() {
     const onResize = () => {
       w = window.innerWidth;
       h = window.innerHeight;
-      canvas.width  = w;
+      canvas.width = w;
       canvas.height = h;
     };
 
@@ -422,8 +470,12 @@ function FloatingParticles() {
 // The status badge inside [data-photo-badge] translateZ forward for depth.
 function usePhotoTilt() {
   useEffect(() => {
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isTouch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const isTouch = window.matchMedia(
+      "(hover: none) and (pointer: coarse)",
+    ).matches;
     if (prefersReduced || isTouch) return;
 
     const photo = document.querySelector<HTMLElement>("[data-photo-3d]");
@@ -431,21 +483,20 @@ function usePhotoTilt() {
 
     let currentRotX = 0;
     let currentRotY = 0;
-    let targetRotX  = 0;
-    let targetRotY  = 0;
+    let targetRotX = 0;
+    let targetRotY = 0;
     let rafId: number;
 
     const STRENGTH = 15;
 
     const onMouseMove = (e: MouseEvent) => {
       const rect = photo.getBoundingClientRect();
-      // Use distance from center of photo, not card
-      const cx = rect.left + rect.width  / 2;
-      const cy = rect.top  + rect.height / 2;
-      const dx = (e.clientX - cx) / (window.innerWidth  / 2);
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (e.clientX - cx) / (window.innerWidth / 2);
       const dy = (e.clientY - cy) / (window.innerHeight / 2);
       targetRotX = -dy * STRENGTH;
-      targetRotY =  dx * STRENGTH;
+      targetRotY = dx * STRENGTH;
     };
 
     const animate = () => {
@@ -456,7 +507,7 @@ function usePhotoTilt() {
     };
 
     photo.style.transformStyle = "preserve-3d";
-    photo.style.willChange     = "transform";
+    photo.style.willChange = "transform";
 
     window.addEventListener("mousemove", onMouseMove, { passive: true });
     rafId = requestAnimationFrame(animate);
@@ -464,7 +515,7 @@ function usePhotoTilt() {
     return () => {
       window.removeEventListener("mousemove", onMouseMove);
       cancelAnimationFrame(rafId);
-      photo.style.transform  = "";
+      photo.style.transform = "";
       photo.style.willChange = "";
     };
   }, []);
@@ -476,49 +527,48 @@ function usePhotoTilt() {
 // perspective wrapper class when .in-view is toggled by ScrollAnimations.tsx.
 function usePerspectiveScroll() {
   useEffect(() => {
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
     if (prefersReduced) return;
 
-    // Wait for DOM
     const init = () => {
-      // Select all section h2 headings
       const headings = document.querySelectorAll<HTMLElement>("section h2");
       headings.forEach((h2) => {
         const parent = h2.closest("[data-animate]") as HTMLElement | null;
-        h2.style.transition = "transform 0.75s cubic-bezier(0.22,1,0.36,1), opacity 0.6s ease";
+        h2.style.transition =
+          "transform 0.75s cubic-bezier(0.22,1,0.36,1), opacity 0.6s ease";
         h2.style.transformStyle = "preserve-3d";
 
         const applyStyles = (inView: boolean) => {
           if (inView) {
-            h2.style.transform = "perspective(900px) rotateX(0deg) translateY(0)";
-            h2.style.opacity   = "1";
+            h2.style.transform =
+              "perspective(900px) rotateX(0deg) translateY(0)";
+            h2.style.opacity = "1";
           } else {
-            h2.style.transform = "perspective(900px) rotateX(22deg) translateY(14px)";
-            h2.style.opacity   = "0";
+            h2.style.transform =
+              "perspective(900px) rotateX(22deg) translateY(14px)";
+            h2.style.opacity = "0";
           }
         };
 
-        // Initial state
         applyStyles(false);
 
         if (parent) {
-          // Watch parent's .in-view class
           const mo = new MutationObserver(() => {
             applyStyles(parent.classList.contains("in-view"));
           });
           mo.observe(parent, { attributes: true, attributeFilter: ["class"] });
         } else {
-          // No data-animate parent — observe the h2 itself via IntersectionObserver
           const obs = new IntersectionObserver(
             ([entry]) => applyStyles(entry.isIntersecting),
-            { threshold: 0.2 }
+            { threshold: 0.2 },
           );
           obs.observe(h2);
         }
       });
     };
 
-    // Run after first paint
     const t = setTimeout(init, 100);
     return () => clearTimeout(t);
   }, []);
@@ -535,10 +585,7 @@ export default function ThreeD() {
 
   return (
     <>
-      {/* Floating particles canvas */}
       <FloatingParticles />
-
-      {/* Spotlight — follows cursor with lazy lerp */}
       <div
         ref={spotRef}
         className="fixed top-0 left-0 w-[600px] h-[600px] rounded-full pointer-events-none z-0"
