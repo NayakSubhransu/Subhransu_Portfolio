@@ -123,7 +123,7 @@ export default function HeroNetwork() {
       "(hover: none) and (pointer: coarse)"
     ).matches;
     
-    if (prefersReduced || isTouch) return;
+  if (prefersReduced || isTouch) return;
     // const isTouch = ...; // used to SKIP mouse forces, not to exit
 
     const canvas = canvasRef.current;

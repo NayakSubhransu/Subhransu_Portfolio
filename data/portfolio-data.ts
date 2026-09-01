@@ -558,13 +558,21 @@ export const education : Education[] = [
 
 export const certifications: Certification[] = [
   {
+    id: "hackerrank-rest-api-intermediate",
+    name: "Rest API (Intermediate)",
+    issuer: "HackerRank",
+    year: 2026,
+    verifyUrl: "https://www.hackerrank.com/certificates/d52a49c56e2a",
+    skills: ["Server-Side Query Filtering", "Asynchronous Request Handling", "Dynamic API Pagination", "Network Connection Pooling"],
+  },
+  {
     id: "sys-design-grokking",
     name: "System Design (Grokking the System Design Interview)",
     issuer: "DesignGurus",
     year: 2026,
     verifyUrl:
       "https://www.designgurus.io/certificate/WyI2MzZiMWQwOTNiMjJmYWEzZTg5YjI0OTEiLCI2OWFjYTBmMDJmYTMyNTFmMWM2NmY5NWYiXQ==",
-    skills: ["System Design", "Distributed Systems", "Scalability"],
+    skills: ["System Design", "Distributed Systems", "Database Sharding", "Microservices & EDA"],
   },
   {
     id: "sys-design-udemy",
@@ -573,16 +581,29 @@ export const certifications: Certification[] = [
     year: 2026,
     verifyUrl:
       "https://www.udemy.com/certificate/UC-4458615f-6eab-4450-acc2-9b2e581e011e/",
-    skills: ["HLD", "LLD", "Architecture Patterns"],
+    skills: [
+      "Protocols & API Communication",
+      "Caching",
+      "Message Queues",
+      "Architectural Patterns","Case studies"
+    ],
+  },
+  {
+    id: "hackerrank-sql-intermediate",
+    name: "SQL (Intermediate)",
+    issuer: "HackerRank",
+    year: 2026,
+    verifyUrl: "https://www.hackerrank.com/certificates/78f03c2b331a",
+    skills: ["Complex Joins", "Window Functions", "CTEs", "Query Optimization"],
   },
   {
     id: "advanced-sql",
-    name: "Advanced SQL Querying",
+    name: "Advanced SQL Querying Techniques",
     issuer: "Udemy",
     year: 2025,
     verifyUrl:
       "https://www.udemy.com/certificate/UC-e1dc5ba4-708a-45e8-99c5-da1df6cad873/",
-    skills: ["SQL", "CTEs", "Window Functions", "Query Optimization"],
+    skills: ["DB Design", "Multi-Table JOINS", "Index Optimization", "Query Tuning"],
   },
   {
     id: "algo-cp",
@@ -591,7 +612,7 @@ export const certifications: Certification[] = [
     year: 2025,
     verifyUrl:
       "https://drive.google.com/file/d/1kd0ajaig1xsxeCuuiMdO9F1HE2XHiNl6/view?usp=drive_link",
-    skills: ["DSA", "Competitive Programming", "Algorithms"],
+    skills: ["Advanced Algorithms", "Graph Theory", "Dynamic Programming"],
   },
   {
     id: "react-guide",
@@ -600,7 +621,7 @@ export const certifications: Certification[] = [
     year: 2025,
     verifyUrl:
       "https://drive.google.com/file/d/1yqz3KZtkEc-7J6Pgo5WukM4LUp7YBzIv/view?usp=drive_link",
-    skills: ["React.js", "Hooks", "State Management"],
+    skills: ["React Essentials", "Custom Hooks", "State Management", "Component Architecture"],
   },
   {
     id: "react-native-guide",
@@ -609,7 +630,7 @@ export const certifications: Certification[] = [
     year: 2025,
     verifyUrl:
       "https://drive.google.com/file/d/1h06vc4XufEuwzezkBbrBVxV5ngCrW7bi/view?usp=drive_link",
-    skills: ["React Native", "TypeScript", "Mobile Development"],
+    skills: ["Layouts and Styling", "Push Notifications", "Navigation and State Management"],
   },
   {
     id: "sql-cert",
@@ -618,7 +639,7 @@ export const certifications: Certification[] = [
     year: 2023,
     verifyUrl:
       "https://drive.google.com/file/d/16WM3NoD9SJ_AYrq4DE6kEQdYVnHLvmwH/view?usp=drive_link",
-    skills: ["SQL", "Database Design"],
+    skills: ["DB Schema Design", "Data Modeling", "Normalization", "CRUD Operations"],
   },
   {
     id: "java-indepth",
