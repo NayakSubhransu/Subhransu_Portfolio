@@ -1,8 +1,8 @@
 // app/page.tsx — React Server Component
 
 import Navbar          from "@/components/ui/Navbar";
-import Footer          from "@/components/ui/Footer";
 import BottomDockClient from "@/components/ui/BottomDockClient";
+import Footer          from "@/components/ui/Footer";
 
 import Hero             from "@/components/sections/Hero";
 import Experience       from "@/components/sections/Experience";
@@ -50,8 +50,6 @@ export default function HomePage() {
       </main>
 
       <Footer />
-
-      {/* ── Mobile Bottom Dock — client-only via wrapper ── */}
       <BottomDockClient />
     </>
   );
