@@ -189,7 +189,7 @@ export default function Contact() {
       <div className="relative max-w-6xl mx-auto">
 
         {/* ── Section Header ── */}
-        <header className="mb-10 sm:mb-14 text-center">
+        <header className="mb-10 sm:mb-14 text-center" data-animate>
           <p className="section-eyebrow justify-center mb-3">
             <Mail className="w-3 h-3" aria-hidden="true" />
             Get In Touch

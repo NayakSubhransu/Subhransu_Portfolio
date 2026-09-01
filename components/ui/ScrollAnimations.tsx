@@ -2,35 +2,37 @@
 
 import { useEffect } from "react";
 
-// ── Mounts an IntersectionObserver that adds .in-view to any element
-// that has [data-animate] or [data-animate-children] once it enters
-// the viewport. No external library required.
-
+/**
+ * ScrollAnimations — fires .in-view on [data-animate] / [data-animate-children]
+ * Uses a lower threshold on mobile for earlier trigger (content enters viewport faster).
+ */
 export default function ScrollAnimations() {
   useEffect(() => {
     const targets = document.querySelectorAll(
       "[data-animate], [data-animate-children]"
     );
-
     if (!targets.length) return;
+
+    const isMobile = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("in-view");
-            // Unobserve after animation fires — play once only
             observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
+      {
+        threshold: isMobile ? 0.04 : 0.08,
+        rootMargin: isMobile ? "0px 0px -20px 0px" : "0px 0px -40px 0px",
+      }
     );
 
     targets.forEach((el) => observer.observe(el));
-
     return () => observer.disconnect();
   }, []);
 
-  return null; // purely behavioral — renders nothing
+  return null;
 }

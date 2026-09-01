@@ -137,6 +137,9 @@ function ExperienceCard({
   return (
     <article
       ref={cardRef}
+      data-tilt
+      data-tilt-strength="5"
+      data-tilt-glare="true"
       className="relative rounded-2xl overflow-hidden border border-[--border-subtle] bg-[--bg-card] transition-all duration-300 will-change-transform"
       style={{
         background: `radial-gradient(ellipse 70% 50% at 0% 0%, ${c.topGlow}, transparent 55%), rgba(17,24,39,0.65)`,
@@ -506,7 +509,7 @@ export default function Experience() {
       <div className="relative max-w-6xl mx-auto">
 
         {/* ── Section Header ── */}
-        <header className="mb-10 sm:mb-14">
+        <header className="mb-10 sm:mb-14" data-animate>
           <p className="section-eyebrow mb-3">
             <Briefcase className="w-3 h-3" aria-hidden="true" />
             Career

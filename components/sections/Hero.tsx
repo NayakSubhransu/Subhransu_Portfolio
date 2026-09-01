@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
-import HeroNetwork from "@/components/ui/HeroNetwork";
 import {
   Github,
   Linkedin,
@@ -132,10 +131,9 @@ export default function Hero() {
       className="relative min-h-[100svh] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 pt-20 pb-28 lg:pb-24 overflow-hidden"
       aria-label="Hero - Introduction"
     >
-      {/* Interactive distributed network — primary hero background */}
-      <HeroNetwork />
+      {/* Network background rendered globally — see GlobalNetwork in layout.tsx */}
 
-      {/* Signature grid mesh — sits on top of network as subtle overlay */}
+      {/* Signature grid mesh overlay */}
       <div className="hero-grid" style={{ opacity: 0.45 }} aria-hidden="true" />
 
       {/* Ambient radial glows — clipped to avoid horizontal scroll on mobile */}
@@ -153,7 +151,7 @@ export default function Hero() {
           {/* ── Photo Column ── */}
           <div className="flex-shrink-0 flex flex-col items-center gap-5">
             {/* Profile image */}
-            <div className="relative">
+            <div className="relative" data-photo-3d>
               <div
                 className={`photo-container w-44 h-44 sm:w-56 sm:h-56 lg:w-80 lg:h-80 select-none${isRevealed ? " revealed" : ""}`}
                 onMouseEnter={() => setIsRevealed(true)}

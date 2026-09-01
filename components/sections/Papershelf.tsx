@@ -11,7 +11,7 @@ export default function Papershelf() {
     >
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <header className="mb-10 sm:mb-14">
+        <header className="mb-10 sm:mb-14" data-animate>
           <p className="section-eyebrow mb-3">
             <BookOpen className="w-3 h-3" aria-hidden="true" />
             Research &amp; Curated Reading Log

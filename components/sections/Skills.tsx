@@ -47,7 +47,7 @@ export default function Skills() {
     >
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <header className="mb-10 sm:mb-14">
+        <header className="mb-10 sm:mb-14" data-animate>
           <p className="section-eyebrow mb-3">
             <Layers className="w-3 h-3" aria-hidden="true" />
             Capabilities
@@ -61,7 +61,7 @@ export default function Skills() {
         </header>
 
         {/* Skills Grid — 1 col on mobile, 2 on sm+ */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5" data-animate-children>
           {skillCategories.map((category) => {
             const Icon = ICON_MAP[category.icon] ?? Layers;
             const style = CATEGORY_STYLES[category.id] ?? CATEGORY_STYLES["languages"];
@@ -69,7 +69,10 @@ export default function Skills() {
             return (
               <article
                 key={category.id}
-                className={`relative overflow-hidden rounded-2xl border ${style.border} glass-card p-4 sm:p-5 lg:p-6`}
+                data-tilt
+                data-tilt-strength="7"
+                data-tilt-glare="true"
+                className={`relative overflow-hidden rounded-2xl border ${style.border} glass-card holo-card p-4 sm:p-5 lg:p-6`}
                 aria-label={`${category.title} skills`}
               >
                 {/* Background gradient */}
@@ -91,7 +94,7 @@ export default function Skills() {
                     </h3>
                   </div>
 
-                  {/* Skills Tags — naturally wrapping */}
+                  {/* Skills Tags */}
                   <div
                     className="flex flex-wrap gap-2"
                     role="list"
@@ -116,6 +119,7 @@ export default function Skills() {
         {/* Bottom note */}
         <div
           className="mt-6 sm:mt-8 p-4 sm:p-5 rounded-xl border border-white/[0.5] bg-white/[0.02] flex flex-col sm:flex-row items-start sm:items-center gap-3"
+          data-animate
           aria-hidden="true"
         >
           <Code2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />

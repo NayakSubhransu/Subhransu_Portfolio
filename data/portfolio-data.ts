@@ -585,7 +585,7 @@ export const certifications: Certification[] = [
       "Protocols & API Communication",
       "Caching",
       "Message Queues",
-      "Architectural Patterns","Case studies"
+      "Architectural Patterns","Design Case studies"
     ],
   },
   {

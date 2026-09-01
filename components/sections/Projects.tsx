@@ -131,6 +131,9 @@ function FlagshipCard({
   return (
     <article
       ref={cardRef}
+      data-tilt
+      data-tilt-strength="5"
+      data-tilt-glare="true"
       className="relative group rounded-2xl overflow-hidden border border-[--border-subtle] bg-[--bg-card] transition-all duration-300 will-change-transform"
       style={{
         background: `radial-gradient(ellipse 70% 55% at 0% 0%, ${c.topGlow}, transparent 55%), rgba(17,24,39,0.65)`,
@@ -349,6 +352,9 @@ function UtilityCard({
   return (
     <article
       ref={cardRef}
+      data-tilt
+      data-tilt-strength="6"
+      data-tilt-glare="true"
       className="group relative flex flex-col rounded-xl overflow-hidden border border-[--border-subtle] bg-[--bg-card] transition-all duration-300 will-change-transform"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -480,7 +486,7 @@ export default function Projects() {
       <div className="relative max-w-6xl mx-auto">
 
         {/* ── Section Header ── */}
-        <header className="mb-10 sm:mb-14">
+        <header className="mb-10 sm:mb-14" data-animate>
           <p className="section-eyebrow mb-3">
             <FolderGit2 className="w-3 h-3" aria-hidden="true" />
             Engineering
