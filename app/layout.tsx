@@ -5,6 +5,7 @@ import "./globals.css";
 import ThreeD from "@/components/ui/ThreeD";
 import ScrollAnimations from "@/components/ui/ScrollAnimations";
 import GlobalNetwork from "@/components/ui/GlobalNetwork";
+import BottomDockClient from "@/components/ui/BottomDockClient";
 
 // ─── Metadata ────────────────────────────────────────────────────────────────
 export const metadata: Metadata = {
@@ -127,6 +128,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 
         {/* ── Page content (z-index ≥ 1 via globals.css) ── */}
         {children}
+
+        {/* ── Mobile Bottom Dock — direct child of body, no stacking context parent ── */}
+        <BottomDockClient />
       </body>
     </html>
   );
