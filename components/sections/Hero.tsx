@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import HeroNetwork from "@/components/ui/HeroNetwork";
 import {
   Github,
   Linkedin,
@@ -95,11 +96,29 @@ export default function Hero() {
     socials,
   } = heroData;
 
-  const [isRevealed, setIsRevealed] = useState(false);
-    const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
+  const [isRevealed, setIsRevealed]       = useState(false);
+  const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
   const socialItems = SOCIALS(socials);
-  
   const router = useRouter();
+
+  // ── Typewriter effect on headline ──────────────────────────────────────────
+  const [displayedHeadline, setDisplayedHeadline] = useState("");
+  const headlineRef = useRef(headline);
+
+  useEffect(() => {
+    headlineRef.current = headline;
+    setDisplayedHeadline("");
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i < headlineRef.current.length) {
+        setDisplayedHeadline(headlineRef.current.slice(0, i + 1));
+        i++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 10);
+    return () => clearInterval(interval);
+  }, [headline]);
 
   // Prefetch both document pages immediately so navigation is instant
   useEffect(() => {
@@ -113,19 +132,22 @@ export default function Hero() {
       className="relative min-h-[100svh] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 pt-20 pb-28 lg:pb-24 overflow-hidden"
       aria-label="Hero - Introduction"
     >
-      {/* Signature element: grid mesh */}
-      <div className="hero-grid" aria-hidden="true" />
+      {/* Interactive distributed network — primary hero background */}
+      <HeroNetwork />
+
+      {/* Signature grid mesh — sits on top of network as subtle overlay */}
+      <div className="hero-grid" style={{ opacity: 0.45 }} aria-hidden="true" />
 
       {/* Ambient radial glows — clipped to avoid horizontal scroll on mobile */}
       <div
-        className="absolute inset-0 pointer-events-none overflow-hidden"
+        className="absolute inset-0 pointer-events-none overflow-hidden z-[1]"
         aria-hidden="true"
       >
-        <div className="absolute top-1/3 left-1/4 w-[300px] sm:w-[480px] h-[300px] sm:h-[480px] bg-cyan-500/[0.055] rounded-full blur-[60px] sm:blur-[80px]" />
-        <div className="absolute bottom-1/4 right-0 sm:right-1/5 w-[240px] sm:w-[360px] h-[240px] sm:h-[360px] bg-violet-500/[0.05] rounded-full blur-[60px] sm:blur-[80px]" />
+        <div data-depth="0.4" className="absolute top-1/3 left-1/4 w-[300px] sm:w-[480px] h-[300px] sm:h-[480px] bg-cyan-500/[0.055] rounded-full blur-[60px] sm:blur-[80px]" />
+        <div data-depth="0.7" className="absolute bottom-1/4 right-0 sm:right-1/5 w-[240px] sm:w-[360px] h-[240px] sm:h-[360px] bg-violet-500/[0.05] rounded-full blur-[60px] sm:blur-[80px]" />
       </div>
 
-      <div className="relative max-w-6xl mx-auto w-full">
+      <div className="relative z-10 max-w-6xl mx-auto w-full">
         {/* Mobile: stacked column. Desktop: side-by-side row */}
         <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8 sm:gap-10 lg:gap-16">
           {/* ── Photo Column ── */}
@@ -309,8 +331,13 @@ export default function Hero() {
               <p className="text-base sm:text-lg font-semibold text-zinc-300">
                 {title}
               </p>
-              <p className="text-sm font-medium text-emerald-400 font-mono">
-                {headline}
+              <p className="text-sm font-medium text-emerald-400 font-mono flex items-center gap-0.5" aria-label={headline}>
+                <span aria-hidden="true">{displayedHeadline}</span>
+                <span
+                  className="inline-block w-[2px] h-[1em] bg-emerald-400 ml-0.5 align-middle"
+                  style={{ animation: "blink 1s step-end infinite" }}
+                  aria-hidden="true"
+                />
               </p>
             </div>
 
@@ -325,6 +352,8 @@ export default function Hero() {
               <Link
                 href="/resume"
                 prefetch={true}
+                data-magnetic
+                data-magnetic-strength="0.30"
                 className="group flex items-center gap-2 px-4 sm:px-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-zinc-900 font-semibold text-sm transition-all duration-200 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 min-h-[44px]"
                 aria-label="View Resume"
               >
@@ -340,6 +369,8 @@ export default function Hero() {
               <Link
                 href="/cover-letter"
                 prefetch={true}
+                data-magnetic
+                data-magnetic-strength="0.30"
                 className="group flex items-center gap-2 px-4 sm:px-5 py-3 rounded-xl border border-indigo-500/30 bg-indigo-500/10 hover:bg-indigo-500/20 active:bg-indigo-500/30 text-indigo-300 hover:text-indigo-200 font-semibold text-sm transition-all duration-200 min-h-[44px]"
                 aria-label="View Cover Letter"
               >
@@ -356,6 +387,8 @@ export default function Hero() {
                 href={socials.github.url}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-magnetic
+                data-magnetic-strength="0.25"
                 className="group flex items-center gap-2 px-4 sm:px-5 py-3 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.07] text-zinc-300 hover:text-zinc-100 font-semibold text-sm transition-all duration-200 min-h-[44px]"
                 aria-label="Visit GitHub profile"
               >
@@ -374,8 +407,8 @@ export default function Hero() {
       {/* Scroll indicator — positioned above the bottom dock on mobile */}
       <a
         href="#experience"
-        className="absolute bottom-20 lg:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-zinc-600 hover:text-zinc-400 transition-colors"
-        aria-label="Scroll to Work Experience"
+        className="absolute bottom-20 lg:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-zinc-600 hover:text-zinc-400 transition-colors z-10"
+        aria-label="Scroll to next section"
       >
         <span className="text-xs font-mono tracking-widest uppercase opacity-60">
           Scroll

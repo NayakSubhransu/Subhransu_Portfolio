@@ -22,7 +22,7 @@ export const heroData: HeroData = {
   title: "Software Developer & AI Engineer",
   headline:
     "Competitive Programming · Full-Stack Development · Microservices · Distributed Systems · GenAI/LLMs · RAG Pipelines · Data Engineering",
-  bio: "IIT Bhubaneswar graduate experienced in scalable backend infrastructure, distributed architectures, and stateful RAG pipelines. The proven track record of architecting low-latency AP storage engines (Amazon Dynamo model), decoupled event-driven microservices, and high-throughput analytical platforms. Active competitive programmer passionate about tackling complex Data Structures and Algorithms challenges under tight complexity constraints.",
+  bio: "IIT Bhubaneswar graduate experienced in scalable backend infrastructure, distributed architectures, and RAG pipelines. The proven track record of architecting low-latency AP Key-Value Store (Amazon Dynamo model), decoupled event-driven microservices, and high-throughput analytical platforms. Active competitive programmer passionate about tackling complex Data Structures and Algorithms challenges under tight complexity constraints.",
   photoPath: "/images/subhransu-photo.jpeg",
   photoAlt: "Subhransu Priyaranjan Nayak - Software Engineer & AI Developer",
   resumePath: "/resume.pdf",
