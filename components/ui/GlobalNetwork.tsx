@@ -52,7 +52,7 @@ export default function GlobalNetwork() {
         vx: Math.cos(angle) * spd,
         vy: Math.sin(angle) * spd,
         r: 1.2 + Math.random() * 2.2,
-        alpha: 0.55 + Math.random() * 0.35,
+        alpha: 0.30 + Math.random() * 0.25,
         ct: i / count,
         isPulse: i % 7 === 0,
         phase: Math.random() * Math.PI * 2,
@@ -71,7 +71,7 @@ export default function GlobalNetwork() {
     if (!ctx) return;
 
     const mobile = isMob();
-    const COUNT   = mobile ? 50  : 130;
+    const COUNT   = mobile ? 30  : 100;
     const CONN_R  = mobile ? 130 : 165;
     const REPEL_R = mobile ? 100 : 200;
     const MAX_SPD = mobile ? .8 : 2.0;
@@ -345,7 +345,7 @@ export default function GlobalNetwork() {
         position: "fixed", inset: 0,
         width: "100vw", height: "100vh",
         zIndex: 0, pointerEvents: "none",
-        opacity: 0.68,
+        opacity: 0.35,
       }}
     />
   );
