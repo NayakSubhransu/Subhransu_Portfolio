@@ -103,11 +103,21 @@ export const workExperience: WorkExperience[] = [
     type: "internship",
     verificationUrl:
       "https://drive.google.com/file/d/1Az1x0rX7HdN39RdKljrPsjGWNHC8vm1z/view?usp=drivesdk",
+    // bullets: [
+    //   "Engineered a **BigQuery**-based data processing layer for a platform serving **600K+ registered students**, integrating Firestore and relational operational data by developing **50+ reusable SQL views** with CTEs, window functions, JSON parsing, regex classification, and temporal deduplication.",
+    //   "Designed and optimized **150+ complex SQL queries** and data pipelines across user **attendance, referral, subscription, payment, and messaging workflows** using incremental aggregation strategies and query tuning.",
+    //   "Built **end-to-end data pipelines** unifying heterogeneous sources **(Firestore Logs, Google/Meta Ads, WhatsApp/AiSensy messaging logs, transactional databases)**, implementing entity matching, and event sequencing across system boundaries.",
+    //   "Developed automated data models and analytical views powering **Looker Studio** dashboards, implementing **funnel/event processing, cohort retention analysis, referral tracking, customer support metrics, and AI-classifier log monitoring**.",
+    // ],
     bullets: [
-      "Engineered a **BigQuery**-based data processing layer for a platform serving **600K+ registered students**, integrating Firestore and relational operational data by developing **50+ reusable SQL views** with CTEs, window functions, JSON parsing, regex classification, and temporal deduplication.",
-      "Designed and optimized **150+ complex SQL queries** and data pipelines across user **attendance, referral, subscription, payment, and messaging workflows** using incremental aggregation strategies and query tuning.",
-      "Built **end-to-end data pipelines** unifying heterogeneous sources **(Firestore Logs, Google/Meta Ads, WhatsApp/AiSensy messaging logs, transactional databases)**, implementing entity matching, and event sequencing across system boundaries.",
-      "Developed automated data models and analytical views powering **Looker Studio** dashboards, implementing **funnel/event processing, cohort retention analysis, referral tracking, customer support metrics, and AI-classifier log monitoring**.",
+      "Architected the HealthyDay's core **GCP analytics infrastructure from scratch**, configuring **IAM, Cloud Functions, Pub/Sub, Cloud Scheduler, Firestore Extensions, and OAuth integrations** to establish a scalable foundation for centralized data operations.",
+      "Executed the **zero-loss migration of 1.39M+ historical records and queries** from legacy environments into **BigQuery**, establishing the company's centralized data warehouse and eliminating redundant cross-project data and billing dependencies.",
+      "Engineered **end-to-end data pipelines** across **Firestore → GCS → BigQuery, PostgreSQL → BigQuery, and external advertising/messaging APIs**, consolidating heterogeneous data sources into unified schemas for cross-functional reporting and analytics.",
+      "Scaled and maintained the **Google BigQuery data warehouse** supporting **13 Lakh+ active user profiles**, designing data models and processing workflows for reliable, high-volume analytical workloads.",
+      "Engineered and optimized **250+ SQL pipelines and 100+ modular views**, leveraging **CTEs, window functions, schema transformations, and temporal deduplication strategies** to improve query performance and maintain reusable analytical abstractions.",
+      "Architected automated **14/21-Day program dashboards** with Monday batch-shifting logic and Firestore event processing to detect **re-registrations**, track multi-language attendance, and monitor onboarding velocity in near real time.",
+      "Built unified data processing workflows across **Firestore event logs, marketing data, messaging platforms, and transactional databases**, implementing schema mapping and entity matching to create consistent cross-system datasets.",
+      "Shipped automated **data models and Looker Studio dashboards** powering retention cohorts, payment funnels, operational KPIs, and real-time business reporting."
     ],
     stack: [
       "Google BigQuery",
@@ -129,10 +139,16 @@ export const workExperience: WorkExperience[] = [
     type: "internship",
     verificationUrl:
       "https://drive.google.com/file/d/1g53s2MK5ZbcHWlSVwPpLtv_hyFDE0sAz/view?usp=sharing",
+    // bullets: [
+    //   "Engineered an **AI text-to-animated-video narration pipeline** for Indian languages (English, Hindi, Telugu ) by fine-tuning **Dia-TTS (1.6B)**, optimizing training with **dynamic LR scheduling and gradient clipping** to eliminate robotic artifacts.",
+    //   "Architected a **long-form audio generation engine** with sentence chunking (**NLTK**), input text normalization, failure-handling retry logic, and seed-locked speaker consistency (**IS11 tag**) for coherent synthesis.",
+    //   "Built an interactive **Streamlit UI** integrating **Gemini 2.5 Flash TTS API** alongside proprietary media pipelines (Hanyaa's), enabling automated **multilingual narration generation**.",
+    // ],
     bullets: [
-      "Engineered an **AI text-to-animated-video narration pipeline** for Indian languages (English, Hindi, Telugu ) by fine-tuning **Dia-TTS (1.6B)**, optimizing training with **dynamic LR scheduling and gradient clipping** to eliminate robotic artifacts.",
-      "Architected a **long-form audio generation engine** with sentence chunking (**NLTK**), input text normalization, failure-handling retry logic, and seed-locked speaker consistency (**IS11 tag**) for coherent synthesis.",
-      "Built an interactive **Streamlit UI** integrating **Gemini 2.5 Flash TTS API** alongside proprietary media pipelines (Hanyaa's), enabling automated **multilingual narration generation**.",
+      "Fine-tuned a **1.6B-parameter Dia-TTS model** across **English, Hindi, and Telugu**, leveraging dynamic learning-rate scheduling and gradient clipping to reduce robotic artifacts and improve speech naturalness.",
+      "Architected a **long-form speech synthesis pipeline** using NLTK-based text chunking and normalization, with a seed-locked speaker-conditioning flag (`--is11`) to maintain consistent **pitch, timbre, and speaker identity** across generated segments.",
+      "Engineered **automated retry mechanisms and failure-recovery loops** to handle transient inference failures and ensure reliable end-to-end speech synthesis during large-scale narration workflows.",
+      "Built a **Streamlit-based internal interface** integrating the **Gemini 2.5 Flash TTS API**, automating end-to-end multilingual narration workflows from text processing through speech generation."
     ],
     stack: [
       "Python",
@@ -299,7 +315,7 @@ export const cpPlatforms: CPPlatform[] = [
     name: "Codeforces",
     handle: "Quantum-Questor",
     profileUrl: "https://codeforces.com/profile/Quantum-Questor",
-    peakRating: 1345,
+    peakRating: 1467,
     ratingLabel: "Pupil",
     problemsSolved: 200,
     colorClass: "text-sky-400",
@@ -311,7 +327,7 @@ export const cpPlatforms: CPPlatform[] = [
     name: "LeetCode",
     handle: "Subhransu_Nayak_07",
     profileUrl: "https://leetcode.com/u/Subhransu_Nayak_07/",
-    peakRating: 1934,
+    peakRating: 1950,
     ratingLabel: "Top 4% Globally",
     problemsSolved: 1000,
     colorClass: "text-yellow-400",
@@ -323,7 +339,7 @@ export const cpPlatforms: CPPlatform[] = [
     name: "CodeChef",
     handle: "quantum_07",
     profileUrl: "https://www.codechef.com/users/quantum_07",
-    peakRating: 1682,
+    peakRating: 1707,
     ratingLabel: "3-Star Division 2",
     colorClass: "text-amber-500",
     accentColor: "#F4A233",
