@@ -328,7 +328,7 @@ export const cpPlatforms: CPPlatform[] = [
     handle: "Subhransu_Nayak_07",
     profileUrl: "https://leetcode.com/u/Subhransu_Nayak_07/",
     peakRating: 1950,
-    ratingLabel: "Top 4% Globally",
+    ratingLabel: "Top 3.5% Globally",
     problemsSolved: 1000,
     colorClass: "text-yellow-400",
     accentColor: "#FFA116",
