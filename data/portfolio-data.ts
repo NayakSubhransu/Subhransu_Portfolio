@@ -316,7 +316,7 @@ export const cpPlatforms: CPPlatform[] = [
     handle: "Quantum-Questor",
     profileUrl: "https://codeforces.com/profile/Quantum-Questor",
     peakRating: 1467,
-    ratingLabel: "Pupil",
+    ratingLabel: "Specialist",
     problemsSolved: 200,
     colorClass: "text-sky-400",
     accentColor: "#1DA1F2",
