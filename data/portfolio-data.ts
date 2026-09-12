@@ -320,7 +320,7 @@ export const cpPlatforms: CPPlatform[] = [
     problemsSolved: 200,
     colorClass: "text-sky-400",
     accentColor: "#1DA1F2",
-    badgeLabel: "Pupil",
+    badgeLabel: "Specialist",
   },
   {
     id: "leetcode",
