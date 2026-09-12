@@ -95,7 +95,7 @@ export const currentFocus: CurrentFocus = {
 export const workExperience: WorkExperience[] = [
   {
     id: "healthyday",
-    role: "Data Engineering Intern",
+    role: "Data Engineering & Analytics Internship",
     company: "HealthyDay",
     companyUrl: "https://healthyday.co.in/",
     location: "Hybrid, India",
@@ -131,7 +131,7 @@ export const workExperience: WorkExperience[] = [
   },
   {
     id: "hanyaa",
-    role: "Software/AI Engineering Intern",
+    role: "Software/AI Engineering Internship",
     company: "Hanyaa Auto Technologies",
     companyUrl: "https://hanyaatech.com/",
     location: "Hyderabad, India",
