@@ -189,7 +189,7 @@ export default function Hero() {
                   className="w-1.5 h-1.5 rounded-full bg-cyan-400 pulse-dot"
                   aria-hidden="true"
                 />
-                Open to Work
+                Beyond the Ordinary /
               </div>
             </div>
 
