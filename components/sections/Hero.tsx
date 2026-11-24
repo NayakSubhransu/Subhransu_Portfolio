@@ -174,7 +174,7 @@ export default function Hero() {
                   alt={photoAlt}
                   fill
                   priority
-                  className={`photo-img object-cover object-[center_75%]${isRevealed ? " revealed" : ""}`}
+                  className={`photo-img object-cover object-[center_90%]${isRevealed ? " revealed" : ""}`}
                   sizes="(max-width: 640px) 176px, (max-width: 1024px) 224px, 320px"
                   placeholder="blur"
                   blurDataURL="data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADwAQCdASoIAAgAAUAmJaACdAEO/gHOAAD++P/rjf//+z//8v////8A"
