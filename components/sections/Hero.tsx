@@ -141,8 +141,14 @@ export default function Hero() {
         className="absolute inset-0 pointer-events-none overflow-hidden z-[1]"
         aria-hidden="true"
       >
-        <div data-depth="0.4" className="absolute top-1/3 left-1/4 w-[300px] sm:w-[480px] h-[300px] sm:h-[480px] bg-cyan-500/[0.055] rounded-full blur-[60px] sm:blur-[80px]" />
-        <div data-depth="0.7" className="absolute bottom-1/4 right-0 sm:right-1/5 w-[240px] sm:w-[360px] h-[240px] sm:h-[360px] bg-violet-500/[0.05] rounded-full blur-[60px] sm:blur-[80px]" />
+        <div
+          data-depth="0.4"
+          className="absolute top-1/3 left-1/4 w-[300px] sm:w-[480px] h-[300px] sm:h-[480px] bg-cyan-500/[0.055] rounded-full blur-[60px] sm:blur-[80px]"
+        />
+        <div
+          data-depth="0.7"
+          className="absolute bottom-1/4 right-0 sm:right-1/5 w-[240px] sm:w-[360px] h-[240px] sm:h-[360px] bg-violet-500/[0.05] rounded-full blur-[60px] sm:blur-[80px]"
+        />
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto w-full">
@@ -168,7 +174,7 @@ export default function Hero() {
                   alt={photoAlt}
                   fill
                   priority
-                  className={`photo-img${isRevealed ? " revealed" : ""}`}
+                  className={`photo-img object-cover object-[center_75%]${isRevealed ? " revealed" : ""}`}
                   sizes="(max-width: 640px) 176px, (max-width: 1024px) 224px, 320px"
                   placeholder="blur"
                   blurDataURL="data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADwAQCdASoIAAgAAUAmJaACdAEO/gHOAAD++P/rjf//+z//8v////8A"
@@ -329,7 +335,10 @@ export default function Hero() {
               <p className="text-base sm:text-lg font-semibold text-zinc-300">
                 {title}
               </p>
-              <p className="text-sm font-medium text-emerald-400 font-mono flex items-center gap-0.5" aria-label={headline}>
+              <p
+                className="text-sm font-medium text-emerald-400 font-mono flex items-center gap-0.5"
+                aria-label={headline}
+              >
                 <span aria-hidden="true">{displayedHeadline}</span>
                 <span
                   className="inline-block w-[2px] h-[1em] bg-emerald-400 ml-0.5 align-middle"
